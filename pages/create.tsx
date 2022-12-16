@@ -1,14 +1,28 @@
 import axios from "axios";
 import React, { useState } from "react";
 
+import { ipfsUrl, serverUrl } from "../utils/config";
+
 export default function Create(this: any) {
-  const [content, setContent] = useState({} as any);
-  const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
+  const [file, setFile] = useState<any>();
+  const [name, setName] = useState<string>();
+  const [desc, setDesc] = useState<string>();
 
-  const onSubmit = () => {};
-
-  const onPickContent = (ev: any) => {};
+  const onSubmit = () => {
+    axios
+      .post(ipfsUrl, { data: file })
+      .then((res) => {
+        axios
+          .put(serverUrl, {
+            name,
+            description: desc,
+            contentUrl: res.data["hash"],
+          })
+          .then((res) => {})
+          .catch((err) => {});
+      })
+      .catch((err) => {});
+  };
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900">
@@ -51,7 +65,11 @@ export default function Create(this: any) {
                     type="file"
                     className="opacity-0"
                     onChange={(ev) => {
-                      setContent((ev.target as HTMLInputElement).files![0]);
+                      const rd = new window.FileReader();
+                      rd.readAsArrayBuffer((ev.target as any).files[0]);
+                      rd.onloadend = () => {
+                        setFile(rd.result);
+                      };
                     }}
                   />
                 </label>
@@ -67,7 +85,7 @@ export default function Create(this: any) {
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Item Name"
                 onVolumeChange={(ev) => {
-                  setName((ev.target as HTMLInputElement).value);
+                  setName((ev.target as any).value);
                 }}
               />
             </div>
@@ -82,7 +100,7 @@ export default function Create(this: any) {
                 placeholder="Datailed description of your NFT"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 onVolumeChange={(ev) => {
-                  setDesc((ev.target as HTMLInputElement).value);
+                  setDesc((ev.target as any).value);
                 }}
               />
             </div>
