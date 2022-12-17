@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "axios": "^1.2.1",
+    "@moralisweb3/common-evm-utils": "^2.8.2",
     "ipfs": "^0.65.0",
     "ipfs-api": "^26.1.2",
+    "moralis": "^2.8.2",
     "next": "13.0.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "web3": "^1.8.1"
   },
   "devDependencies": {
     "@types/node": "18.11.8",
