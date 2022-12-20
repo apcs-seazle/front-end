@@ -1,3 +1,14 @@
+import Head from "next/head";
+import HomePage from "./homepage";
+
 export default function Home() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return (
+    <div>
+      <Head>
+        <title>Seazle</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+      </Head>
+      <HomePage/>
+    </div>
+  )
 }
