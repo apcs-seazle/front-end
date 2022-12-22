@@ -47,7 +47,7 @@ function MyComponent() {
           {items.map((item) => (
             <li key={item._id}>
               <Link
-                as={`/phi1`}
+                // as={`/phi1`}
                 href={{ pathname: "/phi1", query: { _id: item._id } }}
               >
                 <NFT data={item} />
