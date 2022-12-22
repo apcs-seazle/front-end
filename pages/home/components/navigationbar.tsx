@@ -4,7 +4,8 @@
 
 import { KeyboardEvent, useState } from "react";
 
-const HomePage = () => {
+const NavigationBar = () => {
+  console.log("navigation")
   const [searchValue, setSearchValue] = useState('');
   const [isDropOpen, setDrop] = useState({'explore': false, 'profile': false});
 
@@ -91,4 +92,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default NavigationBar

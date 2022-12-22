@@ -1,25 +1,20 @@
+/*
+  Not responsive
+*/
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import React from "react";
+import NavigationBar from "./components/navigationbar"
+import CardNFT from "../../components/card-nfts";
 
-class NFT extends React.Component {
-  data: any;
-
-  constructor(props) {
-    super(props);
-    this.data = props.data;
-  }
-
-  render() {
-    return <img src={this.data.contentUrl} alt="image" />;
-  }
-}
-
-function MyComponent() {
+const HomePage = () => {
+  /*
+    Fetch NFTs
+  */
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     fetch("http://localhost:3030/nft/get-all")
@@ -43,21 +38,11 @@ function MyComponent() {
   } else {
     return (
       <div>
-        <ul>
-          {items.map((item) => (
-            <li key={item._id}>
-              <Link
-                as={`/phi1`}
-                href={{ pathname: "/phi1", query: { _id: item._id } }}
-              >
-                <NFT data={item} />
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <NavigationBar/>
+        <ul>{items.map((item) => (<li><CardNFT id={item._id} nft={item}/></li>))}</ul>
       </div>
     );
   }
 }
 
-export default MyComponent;
+export default HomePage
