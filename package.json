@@ -11,6 +11,8 @@
   "dependencies": {
     "@moralisweb3/common-evm-utils": "^2.8.2",
     "axios": "^1.2.1",
+    "flowbite": "^1.5.5",
+    "flowbite-react": "^0.3.7",
     "ipfs": "^0.65.0",
     "ipfs-api": "^26.1.2",
     "moralis": "^2.8.2",
