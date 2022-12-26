@@ -21,6 +21,7 @@ const connectmetamask = ()=>{
   const[idMint, setIDMinted] = useState<any[]>([])
 
   useEffect(() => {
+    console.log(global.contractAddress)
     if (window.ethereum != undefined) {
       window.ethereum.on("accountsChanged", accountChangeHandler);
       window.ethereum.on("chainChanged", () => {
@@ -34,9 +35,6 @@ const connectmetamask = ()=>{
         setErrorMessage("Disconnected");
       });
     }
-
-    
-
     axios.post("http://localhost:3030/idMinted/update", { idNFT : "25" })
     .then(res => {
       console.log(res); 
@@ -205,6 +203,10 @@ const connectmetamask = ()=>{
         .catch(error => console.log(error));
     };
 
+    const test =()=>{
+      console.log(global.contractAddress);
+    }
+
     return (
         <div>
           <div>
@@ -254,6 +256,9 @@ const connectmetamask = ()=>{
             {idMint.map( hi => <li key={hi._id}>{hi.idNFT}</li>)}
           </p>
           <p className="text-5xl font-bold m-2">{errorMessage}</p>
+          <button onClick={test} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        >Buy now
+        </button>
         </div>
       );
 }

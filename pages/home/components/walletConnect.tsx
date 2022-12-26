@@ -1,4 +1,4 @@
-import { KeyboardEvent, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import web3 from '../../connectMetamask/web3';
 
 declare let window: any;
@@ -8,9 +8,13 @@ const WalletConnect =()=> {
     const[userBalance, setUserBalance] = useState("")
     const[connectMessage, setConnectMessage] = useState("Connect with MetaMask")
     const [showModal, setShowModal] = useState(false);
-    const [isDropOpen, setDrop] = useState({'wallet': false});
 
-    const handleClickDropdown = (val:string) => setDrop({...isDropOpen, [val]: !isDropOpen[val as keyof typeof isDropOpen]})
+    useEffect(() => {
+      if(global.defaultAccount != "")
+      {
+        ConnectToMetamask()
+      }
+    }, []);
 
     const ConnectToMetamask = async ()=>
     {
@@ -34,22 +38,22 @@ const WalletConnect =()=> {
         setUserBalance(balance);
         setDefaultAccount(newAccount[0]);
         setConnectMessage("Connected Successful");
+        global.defaultAccount = newAccount[0]
   }
 
   return(
     <div>
-        <div onMouseEnter={handleClickDropdown.bind(null, 'wallet')}
-                      onMouseLeave={handleClickDropdown.bind(null, 'wallet')}>
-              <button onClick={() => setShowModal(true)} className="block text-gray-700 hover:text-sky-600">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.3} stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
-                </svg>
-              </button>   
+        <div>
+            <button onClick={() => setShowModal(true)} className="block text-gray-700 hover:text-sky-600">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.3} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
+              </svg>
+            </button>   
 
         {showModal ? (
         <>
           <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+            className=" bg-neutral-700 bg-opacity-40 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gradient-to-r outline-none focus:outline-none">
@@ -88,7 +92,6 @@ const WalletConnect =()=> {
               </div>
             </div>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
             </div>

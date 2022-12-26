@@ -1,5 +1,12 @@
 import Head from "next/head";
 import HomePage from "./home";
+import contractAddress from "./connectMetamask/abicontract";
+import { useEffect } from "react";
+
+declare global {
+	var defaultAccount :string  ;
+}
+global.defaultAccount = "";
 
 export default function Home() {
   return (
