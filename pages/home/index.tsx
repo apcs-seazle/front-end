@@ -7,6 +7,7 @@ import Link from "next/link";
 import React from "react";
 import NavigationBar from "./components/navigationbar"
 import CardNFT from "../../components/card-nfts";
+import Loading from "./components/loading";
 
 const HomePage = () => {
   /*
@@ -34,7 +35,7 @@ const HomePage = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   } else {
     return (
       <div>

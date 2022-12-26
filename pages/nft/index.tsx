@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Loading from "../home/components/loading";
 
 export default function NFTPage() {
   const router = useRouter();
@@ -25,13 +26,20 @@ export default function NFTPage() {
       );
     }, [query.id]);
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded || item.contentUrl == undefined) {
-    return <div>Loading...</div>;
-  } else {
-    return <div>
-      <img src={item.contentUrl} alt="image" />
-    </div>
-  }
+    if (error)
+    {
+      return <div>Error: {error.message}</div>;
+    } 
+    else if (!isLoaded)
+    {
+      return (<Loading/>)
+    } 
+    else 
+    {
+      return (
+      <div>
+        <img src={item.contentUrl} alt="image" />
+      </div>
+    )
+    }
 }
