@@ -1,31 +1,48 @@
 import axios from "axios";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useState } from "react";
-
-import { ipfsUrl, serverUrl } from "../utils/config";
+import { v4 } from "uuid";
+import { storage } from "../utils/firebase";
 
 export default function Create(this: any) {
-  const [file, setFile] = useState<any>();
+  const [file, setFile] = useState<any | null>(null);
   const [name, setName] = useState<string>();
   const [desc, setDesc] = useState<string>();
 
   const onSubmit = () => {
-    axios
-      .post(ipfsUrl, { data: file })
-      .then((res) => {
-        axios
-          .put(serverUrl, {
-            name,
-            description: desc,
-            contentUrl: res.data["hash"],
+    if (file == null) {
+      return;
+    }
+
+    const fileref = ref(storage, `files/${v4()}`);
+    uploadBytes(fileref, file)
+      .then((snapshot) => {
+        getDownloadURL(snapshot.ref)
+          .then((url) => {
+            axios
+              .put("", {
+                name,
+                description: desc,
+                contentUrl: url,
+              })
+              .then((resp) => {
+                console.log("create nft successfully:", resp);
+              })
+              .catch((err) => {
+                console.log("create nft failed:", err);
+              });
           })
-          .then((res) => {})
-          .catch((err) => {});
+          .catch((err) => {
+            console.log("get file url failed:", err);
+          });
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log("upload file failed:", err);
+      });
   };
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900">
+    <div className="bg-white dark:bg-gray-900">
       <div className="flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="px-96 py-24 space-y-12">
           <h1 className="text-5xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
@@ -65,11 +82,7 @@ export default function Create(this: any) {
                     type="file"
                     className="opacity-0"
                     onChange={(ev) => {
-                      const rd = new window.FileReader();
-                      rd.readAsArrayBuffer((ev.target as any).files[0]);
-                      rd.onloadend = () => {
-                        setFile(rd.result);
-                      };
+                      setFile(ev.target.files![0]);
                     }}
                   />
                 </label>
