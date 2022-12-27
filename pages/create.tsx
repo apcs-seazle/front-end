@@ -19,12 +19,16 @@ export default function Create(this: any) {
       .then((snapshot) => {
         getDownloadURL(snapshot.ref)
           .then((url) => {
+            const data = {
+              name,
+              description: desc,
+              contentUrl: url,
+              idNFT: v4(),
+            };
+            console.log("create nft data:", data);
+
             axios
-              .put("", {
-                name,
-                description: desc,
-                contentUrl: url,
-              })
+              .post("http://localhost:3030/nft/create", data)
               .then((resp) => {
                 console.log("create nft successfully:", resp);
               })
@@ -49,7 +53,7 @@ export default function Create(this: any) {
             Create NFT
           </h1>
 
-          <form className="space-y-4 md:space-y-6">
+          <div className="space-y-4 md:space-y-6">
             <div>
               <label className="block mb-2 text-xl font-normal text-gray-900 dark:text-white">
                 Image, Video, Audio or 3D Model
@@ -97,7 +101,7 @@ export default function Create(this: any) {
               <input
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Item Name"
-                onVolumeChange={(ev) => {
+                onChange={(ev) => {
                   setName((ev.target as any).value);
                 }}
               />
@@ -112,7 +116,7 @@ export default function Create(this: any) {
                 rows={5}
                 placeholder="Datailed description of your NFT"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                onVolumeChange={(ev) => {
+                onChange={(ev) => {
                   setDesc((ev.target as any).value);
                 }}
               />
@@ -124,7 +128,7 @@ export default function Create(this: any) {
             >
               Create NFT
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
