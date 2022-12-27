@@ -28,7 +28,7 @@ export default function Create(this: any) {
             console.log("create nft data:", data);
 
             axios
-              .post("http://localhost:3030/nft/create", data)
+              .put("http://localhost:3030/nft/create", data)
               .then((resp) => {
                 console.log("create nft successfully:", resp);
               })
