@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Loading from "../home/components/loading";
-import NavigationBar from "../home/components/navigationbar";
+import NavigationBar from "../../components/navigationbar";
 import contract from "../connectMetamask/abicontract";
 import web3 from '../connectMetamask/web3';
 

@@ -5,9 +5,11 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import React from "react";
-import NavigationBar from "./components/navigationbar"
-import CardNFT from "../../components/card-nfts";
+import NavigationBar from "../../components/navigationbar"
+import CardNFT from "./components/card-nfts";
 import Loading from "./components/loading";
+import Highlight from "./components/highlight";
+import TrendingTop from "./components/trending-top";
 
 const HomePage = () => {
   /*
@@ -32,15 +34,17 @@ const HomePage = () => {
       );
   }, []);
 
+
   if (error) {
     return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
     return <Loading/>;
   } else {
     return (
-      <div>
+      <div className="bg-sky-100">
         <NavigationBar/>
-        <ul>{items.map((item) => (<li><CardNFT id={item._id} nft={item}/></li>))}</ul>
+        <Highlight/>
+        {/* <TrendingTop/> */}
       </div>
     );
   }

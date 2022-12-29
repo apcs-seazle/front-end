@@ -3,7 +3,7 @@
 */
 
 import { KeyboardEvent, useState } from "react";
-import WalletConnect from "./walletConnect";
+import WalletConnect from "../pages/home/components/walletConnect";
 
 const NavigationBar = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -22,7 +22,7 @@ const NavigationBar = () => {
   return (
     <div>
       {/* Navigation Bar */}
-      <nav className = "p-2 bg-gradient-to-r from-sky-100 to-rose-100">
+      <nav className = "p-2 bg-gradient-to-r from-sky-200 to-rose-300">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
           {/* Logo */}
           <a href="http://seazle.io" className="flex items-center">
@@ -32,10 +32,10 @@ const NavigationBar = () => {
           {/* Search bar */}
           <div className="flex items-center relative mx-auto text-gray-600 w-1/2">
 
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={`${isSearching ? 2.5 : 1.5}`} stroke="currentColor" className={`w-6 h-6 ${isSearching ? "text-cyan-400" : "text-gray-700"}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={`${isSearching ? 2.5 : 1.5}`} stroke="currentColor" className={`w-6 h-6 ${isSearching ? "text-sky-400" : "text-gray-700"}`}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <input id="search_box" onKeyDown={handleSearchBox} className="focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 ml-2 border-gray-200 bg-white h-10 px-5 rounded-2xl text-sm w-full"
+            <input id="search_box" onKeyDown={handleSearchBox} className="focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 ml-2 border-gray-200 bg-white h-10 px-5 rounded-2xl text-sm w-full"
               type="search" name="search" placeholder="Search items, collections, and accounts"
               onChange={(e) => setSearchValue(e.target.value)}
               onFocus={()=> setIsSearching(true)}
@@ -48,7 +48,7 @@ const NavigationBar = () => {
             <div onMouseEnter={handleClickDropdown.bind(null, 'explore')}
                  onMouseLeave={handleClickDropdown.bind(null, 'explore')}>
               <a href="#" className="block text-gray-700 rounded font-semibold hover:text-sky-600 hover:font-bold">Explore</a>
-              <div id="dropdown" className={`absolute ${isDropOpen['explore'] ? "block" : "hidden"}`}>
+              <div id="dropdown" className={`absolute z-40  ${isDropOpen['explore'] ? "block" : "hidden"}`}>
                 <ul className="mt-2 shadow-pink-300 shadow w-40 bg-white rounded divide-y divide-white">
                   <li><a href="#" className="flex items-center py-1 px-2 text-gray-700 hover:bg-gray-100 hover:text-sky-400 hover:font-bold"><i className="fa-solid fa-bars pl-1 absolute"></i> <div className="pl-10">All NFTs</div></a></li>
                   <li><a href="#" className="flex items-center py-1 px-2 text-gray-700 hover:bg-gray-100 hover:text-sky-400 hover:font-bold"><i className="fa-solid fa-futbol pl-1 absolute"></i> <div className="pl-10">Sports</div></a></li>
@@ -69,7 +69,7 @@ const NavigationBar = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </a>
-              <div id="dropdown" className={`absolute ${isDropOpen['profile'] ? "block" : "hidden"}`}>
+              <div id="dropdown" className={`absolute z-40 ${isDropOpen['profile'] ? "block" : "hidden"}`}>
                 <ul className="mt-2 shadow-pink-300 shadow w-50 bg-white rounded divide-y divide-white">
                   <li><a href="#" className="flex items-center py-1 px-2 text-gray-700 hover:bg-gray-100 hover:text-sky-400 hover:font-bold"><i className="fa-solid fa-user pl-1 absolute"></i><div className="pl-10">Profile</div></a></li>
                   <li><a href="#" className="flex items-center py-1 px-2 text-gray-700 hover:bg-gray-100 hover:text-sky-400 hover:font-bold"><i className="fa-solid fa-star pl-1 absolute"></i> <div className="pl-10">Favorites</div></a></li>
