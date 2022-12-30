@@ -4,6 +4,8 @@
 
 import { KeyboardEvent, useState } from "react";
 import WalletConnect from "../pages/home/components/walletConnect";
+import Link from "next/link";
+import Account from "../pages/home/components/account";
 
 const NavigationBar = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -62,21 +64,15 @@ const NavigationBar = () => {
             <a href="#" className="block text-gray-700 rounded font-semibold hover:text-sky-600 hover:font-bold">Resources</a>
             {/* By icon */}
             {/* Account */}
-            <div onMouseEnter={handleClickDropdown.bind(null, 'profile')}
-                 onMouseLeave={handleClickDropdown.bind(null, 'profile')}>
-              <a href="#" className="block text-gray-700 hover:text-sky-600">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.3} stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </a>
-              <div id="dropdown" className={`absolute z-40 ${isDropOpen['profile'] ? "block" : "hidden"}`}>
-                <ul className="mt-2 shadow-pink-300 shadow w-50 bg-white rounded divide-y divide-white">
-                  <li><a href="#" className="flex items-center py-1 px-2 text-gray-700 hover:bg-gray-100 hover:text-sky-400 hover:font-bold"><i className="fa-solid fa-user pl-1 absolute"></i><div className="pl-10">Profile</div></a></li>
-                  <li><a href="#" className="flex items-center py-1 px-2 text-gray-700 hover:bg-gray-100 hover:text-sky-400 hover:font-bold"><i className="fa-solid fa-star pl-1 absolute"></i> <div className="pl-10">Favorites</div></a></li>
-                  <li><a href="#" className="flex items-center py-1 px-2 text-gray-700 hover:bg-gray-100 hover:text-sky-400 hover:font-bold"><i className="fa-solid fa-list pl-1 absolute"></i> <div className="pl-10">Collections</div></a></li>
-                </ul>
-              </div>
-            </div>
+               <div>
+               <Account address={global.defaultAccount} nft={"1"}/>
+               {/* <Link href={{ pathname: "./asset", query: {id: global.defaultAccount} }}>
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.3} stroke="currentColor" className="w-6 h-6">
+                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+               </svg>
+             </Link> */}
+             </div>
+            
             {/* Wallet */}
             <WalletConnect/>
             {/* Cart */}
