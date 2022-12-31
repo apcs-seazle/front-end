@@ -5,8 +5,10 @@ import { useEffect } from "react";
 
 declare global {
 	var defaultAccount :string  ;
+  var balance : string;
 }
 global.defaultAccount = "";
+global.balance ="";
 
 export default function Home() {
   return (
