@@ -34,7 +34,7 @@ export default function Highlight() {
 
 
   
-	function sideScroll(element,direction,speed,distance,step){
+	function sideScroll(element:any,direction:any,speed:any,distance:any,step:any){
 	let scrollAmount = 0;
 	var slideTimer = setInterval(function(){
     if(direction == 'left'){
