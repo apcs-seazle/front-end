@@ -22,14 +22,24 @@ export default function Highlight() {
       );
   }, []);
 
+  const ScreenSizeDetector = require('screen-size-detector');
+  const screen = new ScreenSizeDetector();
+  let slideWidth = screen.width * 0.2;
+  screen.setMainCallback('widthchange', () => {
+    slideWidth = screen.width * 0.2;
+  });
+
+  // let slideWidth = document.getElementById('all').offsetWidth;
+
+
 	let slideRight = function () {
     var container = document.getElementById('all');
-    sideScroll(container,'right',8,1000,50);
+    sideScroll(container,'right',8,slideWidth,50);
 	};
 
 	let slideLeft = function () {
     var container = document.getElementById('all');
-    sideScroll(container,'left',8,1000,50);
+    sideScroll(container,'left',8,slideWidth,50);
 	};
 
 

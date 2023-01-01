@@ -6,8 +6,8 @@ function NFT({id, nft, index}) {
   return (
     <Link href={{ pathname: "./nft", query: {id: id} }}>
       <div className="flex items-center mt-5 ">
-        <div className="text-gray-500 mr-8 font-bold">{index+1}</div>
-        <img src={nft.contentUrl} alt="" className=" w-20 h-20 bg-center bg-no-repeat rounded-xl" />
+        <div className="text-gray-500 mr-8 font-bold">{index}</div>
+        <img src={nft.contentUrl} alt="" className=" w-20 h-20 object-cover rounded-xl" />
         <div className="font-semibold ml-5 ">{nft.name}</div>
         <div className="text-sm font-semibold ml-auto">{nft.price} BNB</div>
       </div>
