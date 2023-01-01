@@ -24,20 +24,20 @@ const NavigationBar = () => {
   return (
     <div>
       {/* Navigation Bar */}
-      <nav className = "p-2 bg-gradient-to-r from-sky-200 to-rose-300">
+      <nav className = "p-2 bg-gradient-to-r from-cyan-500 via-teal-300 to-rose-300">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
           {/* Logo */}
           <a href="http://seazle.io" className="flex items-center">
-              <img src="https://media.discordapp.net/attachments/871700441791102996/871701497937809448/unknown.png" className="h-6 mr-3 sm:h-9"/>
-              <span className="self-center text-3xl font-semibold whitespace-nowrap dark:text-white">Seazle</span>
+            <img src="https://i.imgur.com/98gX8Ky.png" className="h-6 mr-3 sm:h-9"/>
+            <span className="self-center text-3xl font-semibold whitespace-nowrap text-slate-800">Seazle</span>
           </a>
           {/* Search bar */}
           <div className="flex items-center relative mx-auto text-gray-600 w-1/2">
 
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={`${isSearching ? 2.5 : 1.5}`} stroke="currentColor" className={`w-6 h-6 ${isSearching ? "text-sky-400" : "text-gray-700"}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={`${isSearching ? 2.5 : 1.5}`} stroke="currentColor" className={`w-6 h-6 ${isSearching ? "text-blue-600" : "text-gray-700"}`}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <input id="search_box" onKeyDown={handleSearchBox} className="focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 ml-2 border-gray-200 bg-white h-10 px-5 rounded-2xl text-sm w-full"
+            <input id="search_box" onKeyDown={handleSearchBox} className="focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 ml-2 border-gray-200 bg-white h-10 px-5 rounded-2xl text-sm w-full"
               type="search" name="search" placeholder="Search items, collections, and accounts"
               onChange={(e) => setSearchValue(e.target.value)}
               onFocus={()=> setIsSearching(true)}
