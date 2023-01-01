@@ -56,6 +56,7 @@ const WalletConnect =()=> {
         var balanceInWei =  await web3.eth.getBalance(newAccount.toString());
         var balance =  await web3.utils.fromWei(balanceInWei,'ether');
         setUserBalance(balance);
+        global.balance = balance;
         var tmp = toChecksumAddress(newAccount[0]);
         setDefaultAccount(tmp);
         setConnectMessage("Connected Successful");
@@ -99,7 +100,7 @@ const WalletConnect =()=> {
                 {defaultAccount != "" && 
                   <div>
                     <p className="text-1xl font-semibold whitespace-nowrap dark:text-white">My Address: {defaultAccount}</p>
-                    <p className="text-1xl font-semibold whitespace-nowrap dark:text-white">My Balance: {userBalance}</p>
+                    <p className="text-1xl font-semibold whitespace-nowrap dark:text-white">My Balance: {userBalance} BNB</p>
                   </div>
                 }
                 </div>
