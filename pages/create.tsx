@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import { storage } from "../utils/firebase";
 
@@ -9,6 +9,23 @@ export default function Create(this: any) {
   const [name, setName] = useState<string>();
   const [desc, setDesc] = useState<string>();
 
+  var id: string;
+
+  useEffect(() => {    
+    axios.get("http://localhost:3030/idMinted/get")
+      .then(res => {
+        const ids = res.data;
+
+        var tmp = ids[0].idNFT.toString();
+        var tmp1 = parseInt(tmp);
+        tmp1 ++;
+        id = tmp1.toString();
+
+      })
+      .catch(error => console.log(error));
+
+  });
+  
   const onSubmit = () => {
     if (file == null) {
       return;
@@ -23,14 +40,21 @@ export default function Create(this: any) {
               name,
               description: desc,
               contentUrl: url,
-              idNFT: v4(),
+              idNFT: id,
+              ownerAddress: "0xeBc5d47A69DB9Ff4A0cF35E2CCb60aCaC72BED06",
             };
             console.log("create nft data:", data);
 
             axios
-              .put("http://localhost:3030/nft/create", data)
+              .put("http://localhost:3030/nftCreate/create", data)
               .then((resp) => {
                 console.log("create nft successfully:", resp);
+                axios.post("http://localhost:3030/idMinted/update", { idNFT : id })
+                .then(res => {
+                  console.log(res); 
+                  console.log(res.data);
+                })
+                .catch(error => console.log(error));
               })
               .catch((err) => {
                 console.log("create nft failed:", err);
