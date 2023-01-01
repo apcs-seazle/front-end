@@ -3,7 +3,8 @@ import web3 from './web3'
 declare global {
 	var contractAddress :string  ;
 }
-global.contractAddress = "0x73acfa0baf25facfbbe1614fcdf069bfdebf4969";
+global.contractAddress = "0xA758aF0e0fCA8a881Ee71638C33dd8Cd0913E38f";
+
 const abiContract : AbiItem[] = [
 	{
 		"inputs": [],
@@ -358,19 +359,6 @@ const abiContract : AbiItem[] = [
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "myTotal",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",

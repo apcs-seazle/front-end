@@ -35,7 +35,7 @@ export default function NFTPage() {
         }
       );
 
-      GetNFT();
+      // GetNFT();
   }, []);
 
   const GetNFT = async () => {
