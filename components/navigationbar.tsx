@@ -49,19 +49,9 @@ const NavigationBar = () => {
             {/* By text */}
             <div onMouseEnter={handleClickDropdown.bind(null, 'explore')}
                  onMouseLeave={handleClickDropdown.bind(null, 'explore')}>
-              <a href="#" className="block text-gray-700 rounded font-semibold hover:text-sky-600 hover:font-bold">Explore</a>
-              <div id="dropdown" className={`absolute z-40  ${isDropOpen['explore'] ? "block" : "hidden"}`}>
-                <ul className="mt-2 shadow-pink-300 shadow w-40 bg-white rounded divide-y divide-white">
-                  <li><a href="#" className="flex items-center py-1 px-2 text-gray-700 hover:bg-gray-100 hover:text-sky-400 hover:font-bold"><i className="fa-solid fa-bars pl-1 absolute"></i> <div className="pl-10">All NFTs</div></a></li>
-                  <li><a href="#" className="flex items-center py-1 px-2 text-gray-700 hover:bg-gray-100 hover:text-sky-400 hover:font-bold"><i className="fa-solid fa-futbol pl-1 absolute"></i> <div className="pl-10">Sports</div></a></li>
-                  <li><a href="#" className="flex items-center py-1 px-2 text-gray-700 hover:bg-gray-100 hover:text-sky-400 hover:font-bold"><i className="fa-solid fa-dice-d6 pl-1 absolute"></i> <div className="pl-10">Games</div></a></li>
-                </ul>
-              </div>
+              <a href="#" className="block text-gray-700 rounded font-semibold hover:text-sky-600 hover:font-bold">Create</a>
             </div>
-            
-            <a href="#" className="block text-gray-700 rounded font-semibold hover:text-sky-600 hover:font-bold">Drops</a>
-            <a href="#" className="block text-gray-700 rounded font-semibold hover:text-sky-600 hover:font-bold">Stats</a>
-            <a href="#" className="block text-gray-700 rounded font-semibold hover:text-sky-600 hover:font-bold">Resources</a>
+          
             {/* By icon */}
             {/* Account */}
             <Account address={global.defaultAccount} nft={"1"}/>
