@@ -10,6 +10,7 @@ import CardNFT from "./components/card-nfts";
 import Loading from "./components/loading";
 import Highlight from "./components/highlight";
 import TrendingTop from "./components/trending-top";
+import Footer from "./components/footer";
 
 const HomePage = () => {
   /*
@@ -41,10 +42,11 @@ const HomePage = () => {
     return <Loading/>;
   } else {
     return (
-      <div className="bg-sky-100">
+      <div className="">
         <NavigationBar/>
         <Highlight/>
-        {/* <TrendingTop/> */}
+        <TrendingTop/>
+        <Footer/>
       </div>
     );
   }

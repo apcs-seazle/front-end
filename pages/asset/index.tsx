@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Loading from "../home/components/loading";
-import NavigationBar from "../home/components/navigationbar";
+import NavigationBar from "../../components/navigationbar"
 
 declare let window: any;
 
