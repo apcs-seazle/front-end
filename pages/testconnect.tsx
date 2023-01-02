@@ -9,7 +9,7 @@ declare let window: any;
 var firstTime: boolean = false;
 var arrayID: Array<String> = [];
 
-const connectmetamask = () => {
+const Connectmetamask = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [defaultAccount, setDefaultAccount] = useState("");
   const [userBalance, setUserBalance] = useState("");
@@ -253,4 +253,4 @@ const connectmetamask = () => {
   );
 };
 
-export default connectmetamask;
+export default Connectmetamask;

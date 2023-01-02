@@ -26,7 +26,7 @@ function ListOut({ items }: any) {
       className="grid grid-rows-5 grid-cols-2 grid-flow-col gap-y-px mx-40 auto-cols-max gap-x-20"
     >
       {items.map((item: any, index: any) => (
-        <div className="display:indivne-block px-2">
+        <div key={item._id} className="display:indivne-block px-2">
           <NFT id={item._id} nft={item} index={index} />
         </div>
       ))}

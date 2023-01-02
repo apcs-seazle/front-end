@@ -128,7 +128,10 @@ export default function NFTPage() {
                   <div className="flex items-center">
                     <ul id="all" className="grid gap-4 grid-cols-4 ">
                       {items.map((item: any) => (
-                        <li className="display:inline-block px-2">
+                        <li
+                          key={item._id}
+                          className="display:inline-block px-2"
+                        >
                           <CardNFT id={item._id} nft={item} />
                         </li>
                       ))}

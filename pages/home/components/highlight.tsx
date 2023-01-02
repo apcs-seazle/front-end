@@ -87,7 +87,7 @@ export default function Highlight() {
             className="flex overflow-x-auto scrollbar-hide whitespace-nowrap no-scrollbar mx-36"
           >
             {items.map((item: any) => (
-              <li className="display:inline-block px-2">
+              <li key={item._id} className="display:inline-block px-2">
                 <CardNFT id={item._id} nft={item} />
               </li>
             ))}
