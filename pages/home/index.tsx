@@ -5,7 +5,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import React from "react";
-import NavigationBar from "../../components/navigationbar"
+import NavigationBar from "../../components/navigationbar";
 import CardNFT from "./components/card-nfts";
 import Loading from "./components/loading";
 import Highlight from "./components/highlight";
@@ -16,7 +16,7 @@ const HomePage = () => {
   /*
     Fetch NFTs
   */
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
 
@@ -35,21 +35,20 @@ const HomePage = () => {
       );
   }, []);
 
-
   if (error) {
     return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
-    return <Loading/>;
+    return <Loading />;
   } else {
     return (
       <div className="">
-        <NavigationBar/>
-        <Highlight/>
-        <TrendingTop/>
-        <Footer/>
+        <NavigationBar />
+        <Highlight />
+        <TrendingTop />
+        <Footer />
       </div>
     );
   }
-}
+};
 
-export default HomePage
+export default HomePage;
