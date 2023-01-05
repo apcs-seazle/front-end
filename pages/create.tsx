@@ -2,6 +2,7 @@ import axios from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
+import { HOST } from "../utils/constant";
 import { storage } from "../utils/firebase";
 
 export default function Create(this: any) {
@@ -12,7 +13,7 @@ export default function Create(this: any) {
   var id: string;
 
   useEffect(() => {    
-    axios.get("http://localhost:3030/idMinted/get")
+    axios.get(`${HOST}/idMinted/get`)
       .then(res => {
         const ids = res.data;
 
@@ -46,10 +47,10 @@ export default function Create(this: any) {
             console.log("create nft data:", data);
 
             axios
-              .put("http://localhost:3030/nftCreate/create", data)
+              .put(`${HOST}/nftCreate/create`, data)
               .then((resp) => {
                 console.log("create nft successfully:", resp);
-                axios.post("http://localhost:3030/idMinted/update", { idNFT : id })
+                axios.post(`${HOST}/idMinted/update`, { idNFT : id })
                 .then(res => {
                   console.log(res); 
                   console.log(res.data);

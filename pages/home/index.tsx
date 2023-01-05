@@ -11,6 +11,7 @@ import Loading from "./components/loading";
 import Highlight from "./components/highlight";
 import TrendingTop from "./components/trending-top";
 import Footer from "./components/footer";
+import { HOST } from "../../utils/constant";
 
 const HomePage = () => {
   /*
@@ -21,7 +22,7 @@ const HomePage = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3030/nft/get-all")
+    fetch(`${HOST}/nft/get-all`)
       .then((res) => res.json())
       .then(
         (result) => {

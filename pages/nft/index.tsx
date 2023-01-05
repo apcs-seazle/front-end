@@ -4,6 +4,7 @@ import Loading from "../home/components/loading";
 import NavigationBar from "../../components/navigationbar";
 import contract from "../connectMetamask/abicontract";
 import web3 from '../connectMetamask/web3';
+import { HOST } from "../../utils/constant";
 
 declare let window: any;
 
@@ -20,7 +21,7 @@ export default function NFTPage() {
   const[modalFail, setModalFail] = useState(false)
 
   useEffect(() => {
-    fetch(`http://localhost:3030/nft/get/${query.id}`)
+    fetch(`${HOST}/nft/get/${query.id}`)
     .then((res) => res.json())
     .then(
       (result) => {

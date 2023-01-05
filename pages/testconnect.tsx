@@ -4,6 +4,7 @@ import Moralis from "moralis";
 import { EvmChain } from "@moralisweb3/common-evm-utils";
 import contract from "./connectMetamask/abicontract";
 import axios from "axios";
+import { HOST } from "../utils/constant";
 
 declare let window: any;
 var firstTime: boolean = false;
@@ -36,7 +37,7 @@ const Connectmetamask = () => {
       });
     }
     axios
-      .post("http://localhost:3030/idMinted/update", { idNFT: "25" })
+      .post(`${HOST}/idMinted/update`, { idNFT: "25" })
       .then((res) => {
         console.log(res);
         console.log(res.data);
@@ -44,7 +45,7 @@ const Connectmetamask = () => {
       .catch((error) => console.log(error));
 
     axios
-      .get("http://localhost:3030/idMinted/get")
+      .get(`${HOST}/idMinted/get`)
       .then((res) => {
         const ids = res.data;
         setIDMinted(ids);
@@ -174,7 +175,7 @@ const Connectmetamask = () => {
     // .catch(error => console.log(error));
 
     await axios
-      .get("http://localhost:3030/idMinted/get")
+      .get(`${HOST}/idMinted/get`)
       .then((res) => {
         const ids = res.data;
         setIDMinted(ids);

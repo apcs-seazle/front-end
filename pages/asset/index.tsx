@@ -7,6 +7,7 @@ import NavigationBar from "../../components/navigationbar";
 import { Avatar, Typography, Button } from "@material-tailwind/react";
 import { BriefcaseIcon } from "@heroicons/react/24/solid";
 import CardNFT from "../home/components/card-nfts";
+import { HOST } from "../../utils/constant";
 
 declare let window: any;
 var firstTime = false;
@@ -21,7 +22,7 @@ export default function NFTPage() {
   const [arrayRender, setArrayRender] = useState(Array<String>);
 
   useEffect(() => {
-    fetch(`http://localhost:3030/nft/getNFT/${query.id}`)
+    fetch(`${HOST}/nft/getNFT/${query.id}`)
       .then((res) => res.json())
       .then(
         (result) => {

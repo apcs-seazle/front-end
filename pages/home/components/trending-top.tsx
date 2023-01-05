@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { HOST } from "../../../utils/constant";
 import CardNFT from "./card-nfts";
 
 function NFT({ id, nft, index }: any) {
@@ -42,7 +43,7 @@ export default function TrendingTop() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3030/nft/get-all")
+    fetch(`${HOST}/nft/get-all`)
       .then((res) => res.json())
       .then(
         (result) => {
