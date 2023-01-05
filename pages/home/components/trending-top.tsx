@@ -4,12 +4,14 @@ import { HOST } from "../../../utils/constant";
 import CardNFT from "./card-nfts";
 
 function NFT({ id, nft, index }: any) {
+  const fileUrl = (nft.contentUrl as string) ?? "";
+
   return (
     <Link href={{ pathname: "./nft", query: { id: id } }}>
       <div className="flex items-center mt-5 ">
         <div className="text-gray-500 mr-8 font-bold">{index}</div>
         <img
-          src={nft.contentUrl}
+          src={fileUrl}
           alt=""
           className=" w-20 h-20 object-cover rounded-xl"
         />

@@ -23,24 +23,24 @@ export default function Highlight() {
       );
   }, []);
 
-  const ScreenSizeDetector = require("screen-size-detector");
-  const screen = new ScreenSizeDetector();
-  let slideWidth = screen.width * 0.2;
-  screen.setMainCallback("widthchange", () => {
-    slideWidth = screen.width * 0.2;
-  });
+  // const ScreenSizeDetector = require("screen-size-detector");
+  // const screen = new ScreenSizeDetector();
+  // let slideWidth = screen.width * 0.2;
+  // screen.setMainCallback("widthchange", () => {
+  //   slideWidth = screen.width * 0.2;
+  // });
 
-  // let slideWidth = document.getElementById('all').offsetWidth;
+  // // let slideWidth = document.getElementById('all').offsetWidth;
 
-  let slideRight = function () {
-    var container = document.getElementById("all");
-    sideScroll(container, "right", 8, slideWidth, 50);
-  };
+  // let slideRight = function () {
+  //   var container = document.getElementById("all");
+  //   sideScroll(container, "right", 8, slideWidth, 50);
+  // };
 
-  let slideLeft = function () {
-    var container = document.getElementById("all");
-    sideScroll(container, "left", 8, slideWidth, 50);
-  };
+  // let slideLeft = function () {
+  //   var container = document.getElementById("all");
+  //   sideScroll(container, "left", 8, slideWidth, 50);
+  // };
 
   function sideScroll(
     element: any,
@@ -58,7 +58,9 @@ export default function Highlight() {
       }
       scrollAmount += step;
       if (scrollAmount >= distance) {
-        window.clearInterval(slideTimer);
+        if (window !== undefined) {
+          window.clearInterval(slideTimer);
+        }
       }
     }, speed);
   }
@@ -77,7 +79,7 @@ export default function Highlight() {
           <div className="absolute z-30 w-12 h-12 left-20">
             <button
               className="w-12 h-12 rounded-full bg-white border-2 border-blue-500"
-              onClick={slideLeft}
+              // onClick={slideLeft}
             >
               <i className="fa-solid fa-caret-left text-2xl text-cyan-600"></i>
             </button>
@@ -97,7 +99,7 @@ export default function Highlight() {
           <div className="absolute z-30 w-12 h-12 right-20">
             <button
               className="w-12 h-12 rounded-full bg-white border-2 border-blue-500"
-              onClick={slideRight}
+              // onClick={slideRight}
             >
               <i className="fa-solid fa-caret-right text-2xl text-cyan-600"></i>
             </button>

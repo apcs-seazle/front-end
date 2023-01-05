@@ -1,8 +1,8 @@
 import { use, useEffect, useState } from "react";
-import web3 from "./connectMetamask/web3";
+import web3 from "../helpers/connectMetamask/web3";
 import Moralis from "moralis";
 import { EvmChain } from "@moralisweb3/common-evm-utils";
-import contract from "./connectMetamask/abicontract";
+import contract from "../helpers/connectMetamask/abicontract";
 import axios from "axios";
 import { HOST } from "../utils/constant";
 
