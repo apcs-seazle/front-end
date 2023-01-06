@@ -23,7 +23,9 @@ export default function NFTPage() {
   const [modalSuccess, setModalSuccess] = useState(false);
   const [modalFail, setModalFail] = useState(false);
 
+  console.log(query.id);
   useEffect(() => {
+    if (query.id == undefined) return;
     fetch(`${HOST}/nft/get/${query.id}`)
       .then((res) => res.json())
       .then(
