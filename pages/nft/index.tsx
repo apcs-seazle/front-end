@@ -70,16 +70,49 @@ export default function NFTPage() {
     return (
       <div>
         <NavigationBar />
-        <img className="inline-block" src={fileUrl} alt="image" />
-        <button
-          onClick={() => {
-            setShowModal(true);
-          }}
-          type="button"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-        >
-          Buy Now
-        </button>
+        <div className="flex flex-row gap-5 px-5">
+          <div className="flex flex-col basis-2/5 border-2 border-gray-400 rounded-md">
+            <div className="font-bold text-lg text-right pr-3">
+              <p className="text-gray-400 dark:text-gray-400 inline-block">1</p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="#8A939B"
+                className="w-6 h-6 ml-2 inline-block"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                />
+              </svg>
+            </div>
+            <img
+              src={fileUrl}
+              alt="image"
+              className="w-full border-t-2 border-gray-400"
+            />
+          </div>
+          <span className="block basis-3/5">
+            <div className="flex flex-col">
+              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                Test
+              </p>
+              <button
+                onClick={() => {
+                  setShowModal(true);
+                }}
+                type="button"
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+              >
+                Buy Now
+              </button>
+            </div>
+          </span>
+        </div>
+
         {showModal == true && (
           <div>
             <div className="grid place-items-center bg-neutral-700 bg-opacity-40 fixed top-0 left-0 right-0 z-50 w-full p-4 overflw-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
@@ -110,17 +143,17 @@ export default function NFTPage() {
                   <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                     ID: {item.idNFT}
                   </p>
-                  <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                  {/* <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                     Description: {item.description}
-                  </p>
+                  </p> */}
                   <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    OwnerAddress: {item.ownerAddress}
+                    Owner Address: {item.ownerAddress}
                   </p>
                   <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                     Price: {item.price}
                   </p>
                 </div>
-                <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                <div className="flex justify-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                   <button
                     onClick={buyNFT}
                     data-modal-toggle="defaultModal"
