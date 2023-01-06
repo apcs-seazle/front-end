@@ -67,7 +67,7 @@ export default function Create(this: any) {
   };
 
   return (
-    <div className="bg-[#F0F9FF] dark:bg-gray-900 flex-col">
+    <div className="">
       <NavigationBar />
       <div className="h-screen flex flex-col justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 bg-[#F0F9FF]">
         <div className="px-96 py-24 space-y-12">

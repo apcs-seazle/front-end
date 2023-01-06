@@ -42,7 +42,7 @@ const HomePage = () => {
     return <Loading />;
   } else {
     return (
-      <div className="">
+      <div className="bg-[#F0F9FF]">
         <NavigationBar />
         <Highlight />
         <TrendingTop />
