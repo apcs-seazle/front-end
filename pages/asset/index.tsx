@@ -22,7 +22,7 @@ export default function NFTPage() {
   const [arrayRender, setArrayRender] = useState(Array<String>);
 
   useEffect(() => {
-    fetch(`${HOST}/nft/getNFT/${query.id}`)
+    fetch(`${HOST}/nft/getNFT/${global.defaultAccount}`)
       .then((res) => res.json())
       .then(
         (result) => {
