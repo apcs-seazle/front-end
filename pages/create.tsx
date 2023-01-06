@@ -10,22 +10,7 @@ export default function Create(this: any) {
   const [name, setName] = useState<string>();
   const [desc, setDesc] = useState<string>();
   const [blob, setBlob] = useState<string | undefined>();
-
-  var id: string;
-
-  useEffect(() => {
-    axios
-      .get(`${HOST}/idMinted/get`)
-      .then((res) => {
-        const ids = res.data;
-
-        var tmp = ids[0].idNFT.toString();
-        var tmp1 = parseInt(tmp);
-        tmp1++;
-        id = tmp1.toString();
-      })
-      .catch((error) => console.log(error));
-  });
+  const [success, setSuccess] = useState<boolean>(false);
 
   const onSubmit = () => {
     if (file == null) {
@@ -33,42 +18,51 @@ export default function Create(this: any) {
     }
 
     const fileRef = ref(storage, `files/${v4()}`);
-    uploadBytes(fileRef, file)
-      .then((snapshot) => {
-        getDownloadURL(snapshot.ref)
-          .then((url) => {
-            const data = {
-              name,
-              description: desc,
-              contentUrl: url,
-              idNFT: id,
-              ownerAddress: "0xeBc5d47A69DB9Ff4A0cF35E2CCb60aCaC72BED06",
-            };
-            console.log("create nft data:", data);
+    axios
+      .get(`${HOST}/idMinted/get`)
+      .then((res) => {
+        const ids = res.data;
+        const idNFT = (parseInt(ids[0].idNFT.toString()) + 1).toString();
 
-            axios
-              .put(`${HOST}/nftCreate/create`, data)
-              .then((resp) => {
-                console.log("create nft successfully:", resp);
+        uploadBytes(fileRef, file)
+          .then((snapshot) => {
+            getDownloadURL(snapshot.ref)
+              .then((url) => {
+                const data = {
+                  name,
+                  description: desc,
+                  contentUrl: url,
+                  idNFT,
+                  ownerAddress: global.defaultAccount,
+                };
+                console.log("create nft data:", data);
+
                 axios
-                  .post(`${HOST}/idMinted/update`, { idNFT: id })
-                  .then((res) => {
-                    console.log(res);
-                    console.log(res.data);
+                  .put(`${HOST}/nftCreate/create`, data)
+                  .then((resp) => {
+                    console.log("create nft successfully:", resp);
+                    axios
+                      .post(`${HOST}/idMinted/update`, { idNFT })
+                      .then((res) => {
+                        console.log(res);
+                        console.log(res.data);
+                        setSuccess(true);
+                      })
+                      .catch((error) => console.log(error));
                   })
-                  .catch((error) => console.log(error));
+                  .catch((err) => {
+                    console.log("create nft failed:", err);
+                  });
               })
               .catch((err) => {
-                console.log("create nft failed:", err);
+                console.log("get file url failed:", err);
               });
           })
           .catch((err) => {
-            console.log("get file url failed:", err);
+            console.log("upload file failed:", err);
           });
       })
-      .catch((err) => {
-        console.log("upload file failed:", err);
-      });
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -184,6 +178,39 @@ export default function Create(this: any) {
           </div>
         </div>
       </div>
+
+      {success && (
+        <div>
+          <div className="grid place-items-center bg-neutral-700 bg-opacity-40 fixed top-0 left-0 right-0 z-50 w-full p-4 overflw-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 w-96 grid place-items-center">
+              <div className="flex items-start p-4 border-b rounded-t dark:border-gray-600">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/148/148767.png"
+                  className="p-1 rounded h-11 w-11"
+                  alt="..."
+                />
+
+                <h3 className="text-xl font-semibold pt-2 pl-4 text-gray-900 dark:text-white">
+                  Create NFT successfully!
+                </h3>
+              </div>
+
+              <div className="flex items-center p-6 space-x-2  rounded-b dark:border-gray-600">
+                <button
+                  onClick={() => {
+                    setSuccess(false);
+                  }}
+                  data-modal-toggle="defaultModal"
+                  type="button"
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
