@@ -70,8 +70,8 @@ export default function NFTPage() {
     return (
       <div>
         <NavigationBar />
-        <div className="flex flex-row gap-5 px-5">
-          <div className="flex flex-col basis-2/5 border-2 border-gray-400 rounded-md">
+        <div className="flex flex-row gap-5 px-5 py-5">
+          <div className="flex flex-col basis-2/5 border border-gray-200 rounded-2xl">
             <div className="font-bold text-lg text-right pr-3">
               <p className="text-gray-400 dark:text-gray-400 inline-block">1</p>
               <svg
@@ -92,7 +92,7 @@ export default function NFTPage() {
             <img
               src={fileUrl}
               alt="image"
-              className="w-full border-t-2 border-gray-400"
+              className="w-full border-t border-gray-200"
             />
           </div>
           <span className="block basis-3/5">

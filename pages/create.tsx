@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import { HOST } from "../utils/constant";
 import { storage } from "../utils/firebase";
+import NavigationBar from "../components/navigationbar";
 
 export default function Create(this: any) {
   const [file, setFile] = useState<any | null>(null);
@@ -12,21 +13,20 @@ export default function Create(this: any) {
 
   var id: string;
 
-  useEffect(() => {    
-    axios.get(`${HOST}/idMinted/get`)
-      .then(res => {
+  useEffect(() => {
+    axios
+      .get(`${HOST}/idMinted/get`)
+      .then((res) => {
         const ids = res.data;
 
         var tmp = ids[0].idNFT.toString();
         var tmp1 = parseInt(tmp);
-        tmp1 ++;
+        tmp1++;
         id = tmp1.toString();
-
       })
-      .catch(error => console.log(error));
-
+      .catch((error) => console.log(error));
   });
-  
+
   const onSubmit = () => {
     if (file == null) {
       return;
@@ -50,12 +50,13 @@ export default function Create(this: any) {
               .put(`${HOST}/nftCreate/create`, data)
               .then((resp) => {
                 console.log("create nft successfully:", resp);
-                axios.post(`${HOST}/idMinted/update`, { idNFT : id })
-                .then(res => {
-                  console.log(res); 
-                  console.log(res.data);
-                })
-                .catch(error => console.log(error));
+                axios
+                  .post(`${HOST}/idMinted/update`, { idNFT: id })
+                  .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                  })
+                  .catch((error) => console.log(error));
               })
               .catch((err) => {
                 console.log("create nft failed:", err);
@@ -71,8 +72,9 @@ export default function Create(this: any) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900">
-      <div className="flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <div className="bg-[#F0F9FF] dark:bg-gray-900 flex-col">
+      <NavigationBar />
+      <div className="h-screen flex flex-col justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 bg-[#F0F9FF]">
         <div className="px-96 py-24 space-y-12">
           <h1 className="text-5xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
             Create NFT
