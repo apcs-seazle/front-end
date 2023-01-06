@@ -9,31 +9,31 @@ export default function Create(this: any) {
   const [file, setFile] = useState<any | null>(null);
   const [name, setName] = useState<string>();
   const [desc, setDesc] = useState<string>();
+  const [blob, setBlob] = useState<string | undefined>();
 
   var id: string;
 
-  useEffect(() => {    
-    axios.get(`${HOST}/idMinted/get`)
-      .then(res => {
+  useEffect(() => {
+    axios
+      .get(`${HOST}/idMinted/get`)
+      .then((res) => {
         const ids = res.data;
 
         var tmp = ids[0].idNFT.toString();
         var tmp1 = parseInt(tmp);
-        tmp1 ++;
+        tmp1++;
         id = tmp1.toString();
-
       })
-      .catch(error => console.log(error));
-
+      .catch((error) => console.log(error));
   });
-  
+
   const onSubmit = () => {
     if (file == null) {
       return;
     }
 
-    const fileref = ref(storage, `files/${v4()}`);
-    uploadBytes(fileref, file)
+    const fileRef = ref(storage, `files/${v4()}`);
+    uploadBytes(fileRef, file)
       .then((snapshot) => {
         getDownloadURL(snapshot.ref)
           .then((url) => {
@@ -50,12 +50,13 @@ export default function Create(this: any) {
               .put(`${HOST}/nftCreate/create`, data)
               .then((resp) => {
                 console.log("create nft successfully:", resp);
-                axios.post(`${HOST}/idMinted/update`, { idNFT : id })
-                .then(res => {
-                  console.log(res); 
-                  console.log(res.data);
-                })
-                .catch(error => console.log(error));
+                axios
+                  .post(`${HOST}/idMinted/update`, { idNFT: id })
+                  .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                  })
+                  .catch((error) => console.log(error));
               })
               .catch((err) => {
                 console.log("create nft failed:", err);
@@ -86,31 +87,58 @@ export default function Create(this: any) {
 
               <div className="flex items-center justify-center w-72	h-72">
                 <label className="rounded-lg items-center justify-center flex flex-col w-full h-full border-4 border-blue-200 border-dashed hover:bg-gray-100 hover:border-gray-300">
-                  <div className="flex flex-col items-center justify-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-8 h-8 text-gray-400 group-hover:text-gray-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                      />
-                    </svg>
+                  {blob ? (
+                    <img
+                      className="object-cover items-center justify-center w-full h-full"
+                      src={blob}
+                      alt=""
+                    ></img>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-8 h-8 text-gray-400 group-hover:text-gray-600"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                        />
+                      </svg>
 
-                    <p className="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
-                      Upload a file
-                    </p>
-                  </div>
+                      <p className="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
+                        Upload a file
+                      </p>
+                    </div>
+                  )}
 
                   <input
                     type="file"
-                    className="opacity-0"
+                    className="opacity-0 max-h-0"
                     onChange={(ev) => {
+                      if (
+                        ev.target.files == null ||
+                        ev.target.files == undefined
+                      ) {
+                        return;
+                      }
+
+                      const reader = new window.FileReader();
+                      reader.readAsArrayBuffer(ev.target.files[0]);
+                      reader.onloadend = () => {
+                        const res = reader.result!;
+                        if (typeof res == "string") {
+                          return;
+                        }
+
+                        const blob = new Blob([res]);
+                        setBlob(URL.createObjectURL(blob));
+                      };
+
                       setFile(ev.target.files![0]);
                     }}
                   />
