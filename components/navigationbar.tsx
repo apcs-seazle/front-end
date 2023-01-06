@@ -27,7 +27,7 @@ const NavigationBar = () => {
       <nav className = "p-2 bg-gradient-to-r from-cyan-500 via-teal-300 to-rose-300">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
           {/* Logo */}
-          <a href="http://seazle.io" className="flex items-center">
+          <a href="https://client-seazle.vercel.app/" className="flex items-center">
             <img src="https://i.imgur.com/98gX8Ky.png" className="h-6 mr-3 sm:h-9"/>
             <span className="self-center text-3xl font-semibold whitespace-nowrap text-slate-800">Seazle</span>
           </a>

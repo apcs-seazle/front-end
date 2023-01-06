@@ -8,6 +8,7 @@ import { Avatar, Typography, Button } from "@material-tailwind/react";
 import { BriefcaseIcon } from "@heroicons/react/24/solid";
 import CardNFT from "../home/components/card-nfts";
 import { HOST } from "../../utils/constant";
+import CardNFTMetamask from '../home/components/card-nft-metamask';
 
 declare let window: any;
 var firstTime = false;
@@ -28,13 +29,12 @@ export default function NFTPage() {
         (result) => {
           setIsLoaded(true);
           setItems(result);
+          console.log(items);
         },
         (error) => {
           setIsLoaded(true);
         }
       );
-
-    // GetNFT();
   }, []);
 
   const GetNFT = async () => {
@@ -49,6 +49,7 @@ export default function NFTPage() {
       });
       firstTime = true;
     }
+
     var address = global.defaultAccount;
     const chain = EvmChain.BSC_TESTNET;
     const response = await Moralis.EvmApi.nft.getWalletNFTs({
@@ -61,14 +62,14 @@ export default function NFTPage() {
     var arrayNFT = result[4][1];
     console.log(arrayNFT);
     for (let i = 0; i < arrayNFT.length; i++) {
-      if (arrayNFT[i]["token_address"] == global.contractAddress) {
-        arrayID.push(arrayNFT[i]["token_id"]);
+      if (arrayNFT[i]["token_address"] == "0xda8487633128b4f3751fc5138dfa69acc5f3fcd4") {
+        arrayID.push(arrayNFT[i]);
       }
     }
-    setArrayRender(arrayID);
-    if (arrayID.length != 0) {
-      // setSelectId(String(arrayID[0]));
-    }
+
+    setArrayRender(arrayID)
+    
+    console.log(arrayID);
   };
 
   if (!isLoaded) {
@@ -147,6 +148,23 @@ export default function NFTPage() {
                       NFT in Metamask
                     </Typography>
                   </div>
+                  <button onClick={GetNFT} className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                      Get NFT in Metamask
+                  </button>
+                  
+                  <div className="flex items-center">
+                    <ul id="all" className="grid gap-4 grid-cols-4 ">
+                      {arrayRender.map((item: any) => (
+                        <li
+                          key={item.token_id}
+                          className="display:inline-block px-2"
+                        >
+                          <CardNFTMetamask id={item.token_id} name={item.name} />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                    
                 </div>
               </div>
             </div>
