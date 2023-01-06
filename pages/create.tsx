@@ -114,26 +114,30 @@ export default function Create(this: any) {
                     type="file"
                     className="opacity-0 max-h-0"
                     onChange={(ev) => {
-                      if (
-                        ev.target.files == null ||
-                        ev.target.files == undefined
-                      ) {
-                        return;
-                      }
-
-                      const reader = new window.FileReader();
-                      reader.readAsArrayBuffer(ev.target.files[0]);
-                      reader.onloadend = () => {
-                        const res = reader.result!;
-                        if (typeof res == "string") {
+                      try {
+                        if (
+                          ev.target.files == null ||
+                          ev.target.files == undefined
+                        ) {
                           return;
                         }
 
-                        const blob = new Blob([res]);
-                        setBlob(URL.createObjectURL(blob));
-                      };
+                        const reader = new window.FileReader();
+                        reader.readAsArrayBuffer(ev.target.files[0]);
+                        reader.onloadend = () => {
+                          const res = reader.result!;
+                          if (typeof res == "string") {
+                            return;
+                          }
 
-                      setFile(ev.target.files![0]);
+                          const blob = new Blob([res]);
+                          setBlob(URL.createObjectURL(blob));
+                        };
+
+                        setFile(ev.target.files![0]);
+                      } catch {
+                        console.log("Yo yo, đi nấu đá không ae?");
+                      }
                     }}
                   />
                 </label>
