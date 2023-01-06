@@ -49,15 +49,17 @@ const WalletConnect = () => {
   }
 
   const accountChangeHandler = async (newAccount: any) => {
+    var tmp = toChecksumAddress(newAccount[0]);
+    setDefaultAccount(tmp);
+    global.defaultAccount = tmp;
+    console.log(global.defaultAccount);
+
     var balanceInWei = await web3.eth.getBalance(newAccount.toString());
     var balance = await web3.utils.fromWei(balanceInWei, "ether");
     setUserBalance(balance);
     global.balance = balance;
-    var tmp = toChecksumAddress(newAccount[0]);
-    setDefaultAccount(tmp);
     setConnectMessage("Connected Successful");
-    global.defaultAccount = tmp;
-    console.log(global.defaultAccount);
+    
   };
 
   return (

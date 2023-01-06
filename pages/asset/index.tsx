@@ -67,9 +67,10 @@ export default function NFTPage() {
       }
     }
 
-    setArrayRender(arrayID)
-    
+    await setArrayRender(arrayID)
+    arrayID =[]
     console.log(arrayID);
+
   };
 
   if (!isLoaded) {

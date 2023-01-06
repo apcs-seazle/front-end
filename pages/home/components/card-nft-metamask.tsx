@@ -12,7 +12,6 @@ var ImageURL = [
     "https://cdn.pixabay.com/photo/2022/02/14/02/52/monkey-7012380_960_720.png",
     "https://images.barrons.com/im-394091?width=1280&size=1",
     "https://www.businesstoday.com.my/wp-content/uploads/2022/02/monkey-art-NFT.png",
-    "",
     ]
 
 function randomIntFromInterval(min:any, max:any) { 
