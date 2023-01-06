@@ -6,6 +6,7 @@ import { KeyboardEvent, useState } from "react";
 import WalletConnect from "../pages/home/components/walletConnect";
 import Link from "next/link";
 import Account from "../pages/home/components/account";
+import GetMoney from "../pages/home/components/getMoney";
 
 const NavigationBar = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -51,7 +52,8 @@ const NavigationBar = () => {
                  onMouseLeave={handleClickDropdown.bind(null, 'explore')}>
               <a href="#" className="block text-gray-700 rounded font-semibold hover:text-sky-600 hover:font-bold">Create</a>
             </div>
-          
+            
+          <GetMoney address={"GetMoney"}/>
             {/* By icon */}
             {/* Account */}
             <Account address={"profile"} nft={"1"}/>
