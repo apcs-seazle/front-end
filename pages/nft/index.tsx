@@ -186,7 +186,7 @@ export default function NFTPage() {
                     Description
                   </p>
                 </div>
-                <div className="flex-2 overflow-y-auto border-t-2 border-[#8A939B] px-3 py-3 font-normal text-black text-[1.3rem] text-left">
+                <div className="h-96 flex-2 overflow-y-auto border-t-2 border-[#8A939B] px-3 py-3 font-normal text-black text-[1.3rem] text-left">
                   <p className="">
                     By
                     {
