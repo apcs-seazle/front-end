@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import { HOST } from "../utils/constant";
 import { storage } from "../utils/firebase";
+import NavigationBar from "../components/navigationbar";
 
 export default function Create(this: any) {
   const [file, setFile] = useState<any | null>(null);
@@ -66,8 +67,9 @@ export default function Create(this: any) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900">
-      <div className="flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <div className="">
+      <NavigationBar />
+      <div className="h-screen flex flex-col justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 bg-[#F0F9FF]">
         <div className="px-96 py-24 space-y-12">
           <h1 className="text-5xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
             Create NFT
