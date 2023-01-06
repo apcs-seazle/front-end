@@ -1,84 +1,156 @@
-import Moralis from "moralis";
-import { EvmChain } from "@moralisweb3/common-evm-utils";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Loading from "../home/components/loading";
 import NavigationBar from "../../components/navigationbar";
-import { Avatar, Typography, Button } from "@material-tailwind/react";
-import { BriefcaseIcon } from "@heroicons/react/24/solid";
-import CardNFT from "../home/components/card-nfts";
+import { Typography } from "@material-tailwind/react";
+import axios from "axios";
 import { HOST } from "../../utils/constant";
-import CardNFTMetamask from '../home/components/card-nft-metamask';
+import contractAddress from '../../helpers/connectMetamask/abicontract';
+import web3 from '../../helpers/connectMetamask/web3';
 
 declare let window: any;
-var firstTime = false;
-var arrayID: Array<String> = [];
 
 export default function NFTPage() {
   const router = useRouter();
   const query = router.query;
+  const [money, setMoney] = useState("")
+  const[successPopup , setSuccessPopup] =  useState(false)
+  const[failPopup , setFailPopup] =  useState(false)
+  const[bl, setBalance] = useState("")
 
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
-  const [arrayRender, setArrayRender] = useState(Array<String>);
-
-  useEffect(() => {
-    fetch(`${HOST}/nft/getNFT/${global.defaultAccount}`)
+useEffect(() => {
+    setBalance(global.balance);
+    fetch(`${HOST}/money/get/${global.defaultAccount}`)
       .then((res) => res.json())
       .then(
         (result) => {
-          setIsLoaded(true);
-          setItems(result);
-          console.log(items);
+          if(result.length != 0)
+          {
+            setMoney(result[0].money.toString())
+            console.log(result[0].money.toString())
+          }
+          else
+          {
+            setMoney("0")
+          }
+            
         },
         (error) => {
-          setIsLoaded(true);
+            console.log(error)
         }
       );
   }, []);
 
-  const GetNFT = async () => {
-    if (global.defaultAccount == "") {
-      return;
-    }
+const getMoney= async ()=>{
+  if(money == "0") return;
+    if (typeof window.ethereum != "undefined") {
+        if (defaultAccount != "") {
+          try {
+            var valueInWei = await web3.utils.toWei(money).toString();
+            await contractAddress()
+              .methods.sendEther(defaultAccount, valueInWei, "minh")
+              .send({
+                from: defaultAccount,
+              });
 
-    if (firstTime == false) {
-      await Moralis.start({
-        apiKey:
-          "HGl0bOLcWkPRRLAmD5xN2JmFTMvTTM0CPanypE2AdILzo2MbN2JaXmzAR5Y1gJ0o",
-      });
-      firstTime = true;
-    }
+              axios.delete(`${HOST}/money/delete/${global.defaultAccount}`)
+                .then((res) => {
+                console.log(res);
+                setSuccessPopup(true);
+                setFailPopup(false);
+                setMoney("0");
+                })
+                .catch((error) =>{ 
+                  setSuccessPopup(false);
+                  setFailPopup(true);
+                  console.log(error);
+                });
 
-    var address = global.defaultAccount;
-    const chain = EvmChain.BSC_TESTNET;
-    const response = await Moralis.EvmApi.nft.getWalletNFTs({
-      address,
-      chain,
-    });
-
-    var tmp = response.toJSON();
-    var result = Object.entries(tmp);
-    var arrayNFT = result[4][1];
-    console.log(arrayNFT);
-    for (let i = 0; i < arrayNFT.length; i++) {
-      if (arrayNFT[i]["token_address"] == "0xda8487633128b4f3751fc5138dfa69acc5f3fcd4") {
-        arrayID.push(arrayNFT[i]);
+              var balanceInWei = await web3.eth.getBalance(global.defaultAccount);
+              var balance = await web3.utils.fromWei(balanceInWei, "ether");
+              setBalance(balance);
+              global.balance = balance;
+          } catch (err) {
+            console.log(err);
+            setSuccessPopup(false);
+            setFailPopup(true);
+          }
+        }
       }
-    }
+}
 
-    await setArrayRender(arrayID)
-    arrayID =[]
-    console.log(arrayID);
-
-  };
-
-  if (!isLoaded) {
-    return <Loading />;
-  } else {
     return (
       <div>
         <NavigationBar />
+        {successPopup == true && (
+          <div>
+            <div className="grid place-items-center bg-neutral-700 bg-opacity-40 fixed top-0 left-0 right-0 z-50 w-full p-4 overflw-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+              <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 w-96 grid place-items-center">
+                <div className="flex items-start p-4 border-b rounded-t dark:border-gray-600">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/148/148767.png"
+                    className="p-1 rounded h-11 w-11"
+                    alt="..."
+                  />
+                  <h3 className="text-xl font-semibold pt-2 pl-4 text-gray-900 dark:text-white">
+                    Payment successful
+                  </h3>
+                </div>
+                <div className="p-6 space-y-6">
+                  <p className="font-semibold text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    THANK YOU
+                  </p>
+                </div>
+                <div className="flex items-center p-6 space-x-2  rounded-b dark:border-gray-600">
+                  <button
+                    onClick={() => {
+                      setSuccessPopup(false);
+                    }}
+                    data-modal-toggle="defaultModal"
+                    type="button"
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    Let's go
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {failPopup == true && (
+          <div>
+            <div className="grid place-items-center bg-neutral-700 bg-opacity-40 fixed top-0 left-0 right-0 z-50 w-full p-4 overflw-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+              <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 w-96 grid place-items-center">
+                <div className="flex items-start p-4 border-b rounded-t dark:border-gray-600">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/6659/6659895.png"
+                    className="p-1 rounded h-11 w-11"
+                    alt="..."
+                  />
+                  <h3 className="text-xl font-semibold pt-2 pl-4 text-gray-900 dark:text-white">
+                    Fail Payment
+                  </h3>
+                </div>
+                <div className="p-6 space-y-6">
+                  <p className="font-semibold text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    TRY AGAIN
+                  </p>
+                </div>
+                <div className="flex items-center p-6 space-x-2  rounded-b dark:border-gray-600">
+                  <button
+                    onClick={() => {
+                      setFailPopup(false);
+                    }}
+                    data-modal-toggle="defaultModal"
+                    type="button"
+                    className="text-white bg-red-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    Let's go
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <section className="relative block h-[50vh]">
           <div className="absolute top-0 h-full w-full bg-white bg-cover bg-center" />
         </section>
@@ -108,7 +180,7 @@ export default function NFTPage() {
 
                   <div className="mb-5 flex items-center justify-center gap-2">
                     <Typography className="font-semibold text-blue-gray-700">
-                      Balance: {global.balance} BNB
+                      Balance: {bl} BNB
                     </Typography>
                   </div>
                   <div className="mb-5 flex items-center justify-center gap-2">
@@ -117,10 +189,10 @@ export default function NFTPage() {
                       color="blue-gray"
                       className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500"
                     >
-                      0.4 BNB
+                      {money} BNB
                     </Typography>
                   </div>
-                  <button onClick={GetNFT} className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-6 py-3.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  <button onClick={getMoney} className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-6 py-3.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                       Get Money
                   </button>
                 </div>
@@ -130,5 +202,4 @@ export default function NFTPage() {
         </section>
       </div>
     );
-  }
 }
