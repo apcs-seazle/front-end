@@ -54,7 +54,7 @@ const NavigationBar = () => {
           
             {/* By icon */}
             {/* Account */}
-            <Account address={global.defaultAccount} nft={"1"}/>
+            <Account address={"profile"} nft={"1"}/>
             {/* Wallet */}
             <WalletConnect/>
             {/* Cart */}
