@@ -70,7 +70,7 @@ export default function Create(this: any) {
     <div className="">
       <NavigationBar />
       <div className="h-screen flex flex-col justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 bg-[#F0F9FF]">
-        <div className="px-96 py-24 space-y-12">
+        <div className="px-96 py-18 space-y-12">
           <h1 className="text-5xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
             Create NFT
           </h1>

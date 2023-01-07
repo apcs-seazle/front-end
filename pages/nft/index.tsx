@@ -73,10 +73,10 @@ export default function NFTPage() {
     const fileUrl = (item.contentUrl as string) ?? "";
 
     return (
-      <div className="h-screen bg-[#F0F9FF]">
+      <div className="  ">
         <NavigationBar />
         <div className="flex flex-row gap-5 px-5 py-5">
-          <div className="flex flex-col basis-2/5 border border-gray-200 rounded-2xl">
+          <div className="flex flex-col w-2/5 border border-gray-200 rounded-2xl">
             <div className="font-bold text-lg text-right pr-3">
               <p className="text-gray-400 dark:text-gray-400 inline-block">1</p>
               <svg
@@ -97,10 +97,10 @@ export default function NFTPage() {
             <img
               src={fileUrl}
               alt="image"
-              className="w-full border-t border-gray-200"
+              className="h-full w-full border-t border-gray-200 rounded-b-2xl"
             />
           </div>
-          <span className="block basis-3/5">
+          <span className="block w-3/5">
             <div className="flex flex-col">
               <p className="text-[1.5rem] leading-relaxed text-sky-600 mt-2">
                 Collection name
@@ -246,19 +246,23 @@ export default function NFTPage() {
                 </div>
                 <div className="p-6 space-y-6">
                   <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    Name: {item.name}
+                    <p className="font-bold inline-block">Name:</p>
+                    {" " + item.name}
                   </p>
                   <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    ID: {item.idNFT}
+                    <p className="font-bold inline-block">ID:</p>
+                    {" " + item.idNFT}
                   </p>
                   {/* <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                     Description: {item.description}
                   </p> */}
                   <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    Owner Address: {item.ownerAddress}
+                    <p className="font-bold inline-block">Owner Address:</p>
+                    {" " + item.ownerAddress}
                   </p>
                   <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    Price: {item.price}
+                    <p className="font-bold inline-block">Price:</p>
+                    {" " + item.price}
                   </p>
                 </div>
                 <div className="flex justify-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
