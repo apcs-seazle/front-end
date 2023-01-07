@@ -10,58 +10,58 @@ export default function Sell({ id, nft }: { id: string; nft: any }) {
   const [price, setPrice] = useState<string>();
   const [success, setSuccess] = useState<boolean>(false);
 
-  const onSubmit = () => {
-    if (file == null) {
-      return;
-    }
+  // const onSubmit = () => {
+  //   if (file == null) {
+  //     return;
+  //   }
 
-    const fileRef = ref(storage, `files/${v4()}`);
-    axios
-      .get(`${HOST}/idMinted/get`)
-      .then((res) => {
-        const ids = res.data;
-        const idNFT = (parseInt(ids[0].idNFT.toString()) + 1).toString();
+  //   const fileRef = ref(storage, `files/${v4()}`);
+  //   axios
+  //     .get(`${HOST}/idMinted/get`)
+  //     .then((res) => {
+  //       const ids = res.data;
+  //       const idNFT = (parseInt(ids[0].idNFT.toString()) + 1).toString();
 
-        uploadBytes(fileRef, file)
-          .then((snapshot) => {
-            getDownloadURL(snapshot.ref)
-              .then((url) => {
-                const data = {
-                  name,
-                  description: desc,
-                  contentUrl: url,
-                  idNFT,
-                  ownerAddress: global.defaultAccount,
-                };
-                console.log("create nft data:", data);
+  //       uploadBytes(fileRef, file)
+  //         .then((snapshot) => {
+  //           getDownloadURL(snapshot.ref)
+  //             .then((url) => {
+  //               const data = {
+  //                 name,
+  //                 description: desc,
+  //                 contentUrl: url,
+  //                 idNFT,
+  //                 ownerAddress: global.defaultAccount,
+  //               };
+  //               console.log("create nft data:", data);
 
-                axios
-                  .put(`${HOST}/nftCreate/create`, data)
-                  .then((resp) => {
-                    console.log("create nft successfully:", resp);
-                    axios
-                      .post(`${HOST}/idMinted/update`, { idNFT })
-                      .then((res) => {
-                        console.log(res);
-                        console.log(res.data);
-                        setSuccess(true);
-                      })
-                      .catch((error) => console.log(error));
-                  })
-                  .catch((err) => {
-                    console.log("create nft failed:", err);
-                  });
-              })
-              .catch((err) => {
-                console.log("get file url failed:", err);
-              });
-          })
-          .catch((err) => {
-            console.log("upload file failed:", err);
-          });
-      })
-      .catch((error) => console.log(error));
-  };
+  //               axios
+  //                 .put(`${HOST}/nftCreate/create`, data)
+  //                 .then((resp) => {
+  //                   console.log("create nft successfully:", resp);
+  //                   axios
+  //                     .post(`${HOST}/idMinted/update`, { idNFT })
+  //                     .then((res) => {
+  //                       console.log(res);
+  //                       console.log(res.data);
+  //                       setSuccess(true);
+  //                     })
+  //                     .catch((error) => console.log(error));
+  //                 })
+  //                 .catch((err) => {
+  //                   console.log("create nft failed:", err);
+  //                 });
+  //             })
+  //             .catch((err) => {
+  //               console.log("get file url failed:", err);
+  //             });
+  //         })
+  //         .catch((err) => {
+  //           console.log("upload file failed:", err);
+  //         });
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
 
   return (
     <div className="h-screen bg-[#F0F9FF]">
