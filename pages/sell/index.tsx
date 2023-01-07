@@ -2,9 +2,9 @@ import axios from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
-import { HOST } from "../utils/constant";
-import { storage } from "../utils/firebase";
-import NavigationBar from "../components/navigationbar";
+import { HOST } from "../../utils/constant";
+import { storage } from "../../utils/firebase";
+import NavigationBar from "../../components/navigationbar";
 
 export default function Sell({ id, nft }: { id: string; nft: any }) {
   const [price, setPrice] = useState<string>();
