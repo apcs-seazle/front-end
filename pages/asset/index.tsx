@@ -125,7 +125,7 @@ export default function NFTPage() {
                       color="blue-gray"
                       className="font-semibold"
                     >
-                      {localStorage.getItem("tmp")}
+                      {localStorage.getItem("account")}
                     </Typography>
                   </div>
                   <div className="mb-5 flex items-center justify-center gap-2">
