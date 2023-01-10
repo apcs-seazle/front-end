@@ -11,9 +11,13 @@ import Router, { useRouter } from "next/router";
 
 const NavigationBar = (searchQuery: any) => {
   const router = useRouter();
-  console.log(" search ", searchQuery);
+  // console.log("searching ", searchQuery["searchQuery"]);
 
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState(
+    searchQuery["searchQuery"] == undefined
+      ? undefined
+      : searchQuery["searchQuery"]
+  );
   const [isSearching, setIsSearching] = useState(false);
   const [isDropOpen, setDrop] = useState({
     explore: false,
@@ -81,7 +85,7 @@ const NavigationBar = (searchQuery: any) => {
               onChange={(e) => setSearchValue(e.target.value)}
               onFocus={() => setIsSearching(true)}
               onBlur={() => setIsSearching(false)}
-              value={searchQuery == undefined ? undefined : searchValue}
+              value={searchValue}
             />
           </div>
           {/* Menu Items */}

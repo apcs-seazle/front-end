@@ -16,31 +16,27 @@ export default function FindPage(query: any) {
   const [items, setItem] = useState<any>([]);
   // console.log("before", items);
 
-  console.log("search", searchValue);
   useEffect(() => {
     // console.log("call use effect");
     // if (searchValue == undefined) return;
     if (searchValue == undefined) return;
+    console.log(`${HOST}/nft/search/${searchValue}`);
     axios.post(`${HOST}/nft/search/${searchValue}`).then((res) => {
-      console.log(res);
-      if (res.data.length == 0) return;
+      console.log("return value", res);
       setItem(res.data);
+      setIsLoaded(true);
     });
-    setIsLoaded(true);
   }, [searchValue]);
-
-  console.log("items ", items);
-  //   console.log(items.length);
 
   if (!isLoaded) return <Loading />;
   return (
-    <div>
+    <div className="bg-[#F0F9FF] h-screen">
       <NavigationBar searchQuery={searchValue} />
       {items.length == 0 ? (
-        <div>Item not found</div>
+        <div className="text-center text-xl pt-10">Item not found</div>
       ) : (
-        <div className="flex items-center">
-          <ul id="all" className="flex flex-wrap mt-5 ">
+        <div className="flex items-center ml-5">
+          <ul id="all" className="flex flex-wrap mt-10">
             {items.map((item: any) => (
               <li key={item._id} className="display:inline-block px-2">
                 <CardNFT id={item._id} nft={item} />
