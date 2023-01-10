@@ -42,6 +42,8 @@ export default function NFTPage() {
       );
   }, [query.id]);
 
+  console.log("account", global.defaultAccount);
+
   const buyNFT = async () => {
     if (typeof window.ethereum != "undefined") {
       if (global.defaultAccount != "") {
@@ -78,7 +80,7 @@ export default function NFTPage() {
     let newName = document.getElementById("p_name")?.textContent as string;
     let newDescription = document.getElementById("p_description")
       ?.textContent as string;
-    console.log("updateNFT");
+    // console.log("updateNFT");
     axios
       .post(`${HOST}/nft/update/${item._id}`, {
         // name: "try",
@@ -100,7 +102,7 @@ export default function NFTPage() {
     const fileUrl = (item.contentUrl as string) ?? "";
 
     return (
-      <div className="bg-[#F0F9FF] h-max">
+      <div className="bg-[#F0F9FF] h-screen">
         <NavigationBar />
         <div className="flex flex-row gap-5 px-5 py-5 mt-10">
           <div className="flex flex-col w-2/5 aspect-square  rounded-3xl ml-10  ">
