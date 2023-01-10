@@ -86,12 +86,12 @@ const NavigationBar = () => {
               onMouseEnter={handleClickDropdown.bind(null, "explore")}
               onMouseLeave={handleClickDropdown.bind(null, "explore")}
             >
-              <a
+              <Link
                 href="/create"
                 className="block text-gray-700 rounded font-semibold hover:text-sky-600 hover:font-bold"
               >
                 Create
-              </a>
+              </Link>
             </div>
 
             <GetMoney address={"GetMoney"} />
