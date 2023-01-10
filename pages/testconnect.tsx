@@ -44,6 +44,8 @@ const Connectmetamask = () => {
       })
       .catch((error) => console.log(error));
 
+      
+
     axios
       .get(`${HOST}/idMinted/get`)
       .then((res) => {
