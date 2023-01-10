@@ -58,6 +58,13 @@ export default function NFTPage() {
           setModalSuccess(true);
           setShowModal(false);
           setModalFail(false);
+
+          axios
+          .delete(`${HOST}/nft/delete/${item.idNFT}`)
+          .then((res) => {
+          })
+          .catch((error) => console.log(error));
+          
         } catch (err) {
           setModalSuccess(false);
           setModalFail(true);
