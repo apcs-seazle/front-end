@@ -52,6 +52,7 @@ export default function NFTPage() {
     if (typeof window.ethereum != "undefined") {
       if (global.defaultAccount != "") {
         try {
+          console.log("function called");
           var valueInWei = await web3.utils
             .toWei(item.price.toString())
             .toString();
@@ -61,9 +62,7 @@ export default function NFTPage() {
               from: global.defaultAccount,
               value: valueInWei,
             });
-          setModalSuccess(true);
-          setShowModal(false);
-          setModalFail(false);
+          console.log("success");
 
           axios
             .post(`${HOST}/money/update/${item.ownerAddress}`, {
@@ -77,7 +76,12 @@ export default function NFTPage() {
             .delete(`${HOST}/nft/delete/${item.idNFT}`)
             .then((res) => {})
             .catch((error) => console.log(error));
+
+          setModalSuccess(true);
+          setShowModal(false);
+          setModalFail(false);
         } catch (err) {
+          console.log("error");
           setModalSuccess(false);
           setModalFail(true);
           setShowModal(false);
@@ -101,6 +105,24 @@ export default function NFTPage() {
           /// INSERT CODE REVERT HERE
           ///
           ///
+          axios
+            .put(`${HOST}/nftCreate/create`, {
+              name: item.name,
+              contentUrl: item.contentUrl,
+              description: item.description,
+              idNFT: item.idNFT,
+              ownerAddress: item.ownerAddress,
+            })
+            .then((res) => {
+              console.log(res);
+              console.log(res.data);
+            })
+            .catch((error) => console.log(error));
+
+          axios
+            .delete(`${HOST}/nft/delete/${item.idNFT}`)
+            .then((res) => {})
+            .catch((error) => console.log(error));
         } catch (err) {
           setModalSuccess_keep(false);
           setModalFail_keep(true);
