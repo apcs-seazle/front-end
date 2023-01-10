@@ -89,34 +89,36 @@ const NavigationBar = (searchQuery: any) => {
             />
           </div>
           {/* Menu Items */}
-          <div className="flex space-x-6">
+          <div className="flex space-x-2 items-center">
             {/* By text */}
-            <Link
-              href="/create"
-              className="block text-gray-700 rounded font-semibold hover:text-sky-600 hover:font-bold"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2.3}
-                stroke="currentColor"
-                className="w-6 h-6"
+            <div className="flex items-center space-x-6 bg-slate-200 p-1 px-2 rounded-xl">
+              <Link
+                href="/create"
+                className="block text-gray-700 rounded font-semibold hover:text-sky-600 hover:font-bold"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </Link>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2.3}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </Link>
 
+              {/* By icon */}
+              {/* Account */}
+              <Account address={"profile"} nft={"1"} />
+              {/* Wallet */}
+              <WalletConnect />
+            </div>
             <GetMoney address={"GetMoney"} />
-            {/* By icon */}
-            {/* Account */}
-            <Account address={"profile"} nft={"1"} />
-            {/* Wallet */}
-            <WalletConnect />
             {/* Cart */}
             {/* <a href="#" className="block text-gray-700 hover:text-sky-600">
               <svg
