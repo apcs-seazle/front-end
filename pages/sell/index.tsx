@@ -3,6 +3,7 @@ import { HOST } from "../../utils/constant";
 import NavigationBar from "../../components/navigationbar";
 import router, { useRouter } from "next/router";
 import Loading from "../home/components/loading";
+import axios from "axios";
 
 export default function Sell() {
   const router = useRouter();
@@ -30,7 +31,26 @@ export default function Sell() {
   }, [query.id]);
 
   const onSubmit = () => {
-    return null;
+    axios
+      .put(`${HOST}/nft/create`, { 
+        name: item.name,
+      contentUrl: item.contentUrl,
+      description: item.description,
+      idNFT: item.idNFT,
+      ownerAddress: item.ownerAddress,
+      price: price
+      })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+
+    axios
+      .delete(`${HOST}/nftCreate/delete/${item.idNFT}`)
+      .then((res) => {
+      })
+      .catch((error) => console.log(error));
     
   };
 
