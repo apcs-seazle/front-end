@@ -60,11 +60,9 @@ export default function NFTPage() {
           setModalFail(false);
 
           axios
-          .delete(`${HOST}/nft/delete/${item.idNFT}`)
-          .then((res) => {
-          })
-          .catch((error) => console.log(error));
-          
+            .delete(`${HOST}/nft/delete/${item.idNFT}`)
+            .then((res) => {})
+            .catch((error) => console.log(error));
         } catch (err) {
           setModalSuccess(false);
           setModalFail(true);
@@ -205,7 +203,7 @@ export default function NFTPage() {
                     {item.description}
                   </p>
                 </div>
-                {item.ownerAddress == global.defaultAccount ? (
+                {item.ownerAddress != global.defaultAccount ? (
                   <div className="flex flex-row border-t-2 border-[#8A939B]">
                     <button
                       onClick={() => {
