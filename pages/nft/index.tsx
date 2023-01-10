@@ -8,6 +8,7 @@ import web3 from "../../helpers/connectMetamask/web3";
 import { HOST } from "../../utils/constant";
 import { result } from "lodash";
 import Link from "next/link";
+import axios from "axios";
 
 declare let window: any;
 
@@ -56,6 +57,13 @@ export default function NFTPage() {
           setModalSuccess(true);
           setShowModal(false);
           setModalFail(false);
+
+          axios
+          .delete(`${HOST}/nft/delete/${item.idNFT}`)
+          .then((res) => {
+          })
+          .catch((error) => console.log(error));
+          
         } catch (err) {
           setModalSuccess(false);
           setModalFail(true);
