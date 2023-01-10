@@ -9,17 +9,21 @@ import web3 from '../../helpers/connectMetamask/web3';
 
 declare let window: any;
 
+
 export default function NFTPage() {
+  
   const router = useRouter();
   const query = router.query;
   const [money, setMoney] = useState("")
   const[successPopup , setSuccessPopup] =  useState(false)
   const[failPopup , setFailPopup] =  useState(false)
   const[bl, setBalance] = useState("")
+  const[acc, setAcc] = useState("")
 
 useEffect(() => {
-    setBalance(global.balance);
-    fetch(`${HOST}/money/get/${global.defaultAccount}`)
+    setBalance(localStorage.getItem("balance")!);
+    setAcc( localStorage.getItem("account")!)
+    fetch(`${HOST}/money/get/${localStorage.getItem("account")}`)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -52,7 +56,7 @@ const getMoney= async ()=>{
                 from: defaultAccount,
               });
 
-              axios.delete(`${HOST}/money/delete/${global.defaultAccount}`)
+              axios.delete(`${HOST}/money/delete/${localStorage.getItem("account")}`)
                 .then((res) => {
                 console.log(res);
                 setSuccessPopup(true);
@@ -65,10 +69,10 @@ const getMoney= async ()=>{
                   console.log(error);
                 });
 
-              var balanceInWei = await web3.eth.getBalance(global.defaultAccount);
+              var balanceInWei = await web3.eth.getBalance(localStorage.getItem("account")!.toString());
               var balance = await web3.utils.fromWei(balanceInWei, "ether");
               setBalance(balance);
-              global.balance = balance;
+              localStorage.setItem("balance",balance);
           } catch (err) {
             console.log(err);
             setSuccessPopup(false);
@@ -174,7 +178,7 @@ const getMoney= async ()=>{
                 </div>
                   <div className="mb-5 mt-4 flex items-center justify-center gap-2">
                     <Typography variant="h4" className="font-semibold text-blue-gray-700">
-                      {global.defaultAccount}
+                    {acc}
                     </Typography>
                   </div>
 

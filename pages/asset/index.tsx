@@ -25,7 +25,7 @@ export default function NFTPage() {
   const [arrayRender, setArrayRender] = useState(Array<String>);
 
   useEffect(() => {
-    fetch(`${HOST}/nft/getNFT/${global.defaultAccount}`)
+    fetch(`${HOST}/nft/getNFT/${localStorage.getItem("account")}`)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -37,7 +37,7 @@ export default function NFTPage() {
         }
       );
 
-    fetch(`${HOST}/nftCreate/getNFT/${global.defaultAccount}`)
+    fetch(`${HOST}/nftCreate/getNFT/${localStorage.getItem("tmp")}`)
     .then((res) => res.json())
     .then(
       (result) => {
@@ -52,7 +52,7 @@ export default function NFTPage() {
   }, []);
 
   const GetNFT = async () => {
-    if (global.defaultAccount == "") {
+    if (localStorage.getItem("account") == "") {
       return;
     }
 
@@ -64,7 +64,7 @@ export default function NFTPage() {
       firstTime = true;
     }
 
-    var address = global.defaultAccount;
+    var address = localStorage.getItem("account")!.toString();
     const chain = EvmChain.BSC_TESTNET;
     const response = await Moralis.EvmApi.nft.getWalletNFTs({
       address,
@@ -125,12 +125,12 @@ export default function NFTPage() {
                       color="blue-gray"
                       className="font-semibold"
                     >
-                      {global.defaultAccount}
+                      {localStorage.getItem("tmp")}
                     </Typography>
                   </div>
                   <div className="mb-5 flex items-center justify-center gap-2">
                     <Typography className="font-semibold text-blue-gray-700">
-                      Balance: {global.balance} BNB
+                      Balance: {localStorage.getItem("balance")} BNB
                     </Typography>
                   </div>
 

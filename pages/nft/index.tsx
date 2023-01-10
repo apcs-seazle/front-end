@@ -19,6 +19,7 @@ export default function NFTPage() {
   const [error, setError] = useState<any>();
   const [isLoaded, setIsLoaded] = useState(false);
   const [item, setItem] = useState<any>();
+  const[acc,setAcc] =useState(localStorage.getItem("account")!);
 
   const [showModal, setShowModal] = useState(false);
   const [modalSuccess, setModalSuccess] = useState(false);
@@ -31,6 +32,7 @@ export default function NFTPage() {
   const [isEditting, setIsEditting] = useState(false);
 
   useEffect(() => {
+    
     if (query.id == undefined) return;
     fetch(`${HOST}/nft/get/${query.id}`)
       .then((res) => res.json())
@@ -46,11 +48,11 @@ export default function NFTPage() {
       );
   }, [query.id]);
 
-  console.log("account", global.defaultAccount);
+  console.log("account", localStorage.getItem("account"));
 
   const buyNFT = async () => {
     if (typeof window.ethereum != "undefined") {
-      if (global.defaultAccount != "") {
+      if (localStorage.getItem("account") != "") {
         try {
           var valueInWei = await web3.utils
             .toWei(item.price.toString())
@@ -58,7 +60,7 @@ export default function NFTPage() {
           await contract()
             .methods.buyNFT(item.idNFT.toString(), valueInWei)
             .send({
-              from: global.defaultAccount,
+              from: localStorage.getItem("account"),
               value: valueInWei,
             });
           setModalSuccess(true);
@@ -88,7 +90,7 @@ export default function NFTPage() {
 
   const revertNFT = async () => {
     if (typeof window.ethereum != "undefined") {
-      if (global.defaultAccount != "") {
+      if (localStorage.getItem("account") != "") {
         try {
           setModalSuccess_keep(true);
           setShowModal_keep(false);
@@ -241,7 +243,7 @@ export default function NFTPage() {
                     {item.description}
                   </p>
                 </div>
-                {item.ownerAddress != global.defaultAccount ? (
+                {item.ownerAddress != acc ? (
                   <div className="flex flex-row border-[#8A939B]">
                     <button
                       onClick={() => {

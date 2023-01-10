@@ -34,7 +34,7 @@ export default function Create(this: any) {
                   description: desc,
                   contentUrl: url,
                   idNFT,
-                  ownerAddress: global.defaultAccount,
+                  ownerAddress: localStorage.getItem("account"),
                 };
                 console.log("create nft data:", data);
 
