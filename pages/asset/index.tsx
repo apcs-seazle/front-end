@@ -7,6 +7,7 @@ import NavigationBar from "../../components/navigationbar";
 import { Avatar, Typography, Button } from "@material-tailwind/react";
 import { BriefcaseIcon } from "@heroicons/react/24/solid";
 import CardNFT from "../home/components/card-nfts";
+import CardNFTCreated from "../home/components/card-nft-created";
 import { HOST } from "../../utils/constant";
 import CardNFTMetamask from '../home/components/card-nft-metamask';
 
@@ -19,7 +20,8 @@ export default function NFTPage() {
   const query = router.query;
 
   const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
+  const [nft, setNFT] = useState([]);
+  const [nftCreated, setNFTCreated] = useState([]);
   const [arrayRender, setArrayRender] = useState(Array<String>);
 
   useEffect(() => {
@@ -27,14 +29,26 @@ export default function NFTPage() {
       .then((res) => res.json())
       .then(
         (result) => {
-          setIsLoaded(true);
-          setItems(result);
-          console.log(items);
+          setNFT(result);
+          console.log(nft);
         },
         (error) => {
           setIsLoaded(true);
         }
       );
+
+    fetch(`${HOST}/nftCreate/getNFT/${global.defaultAccount}`)
+    .then((res) => res.json())
+    .then(
+      (result) => {
+        setIsLoaded(true);
+        setNFTCreated(result);
+        console.log(nftCreated);
+      },
+      (error) => {
+        setIsLoaded(true);
+      }
+    );
   }, []);
 
   const GetNFT = async () => {
@@ -119,18 +133,41 @@ export default function NFTPage() {
                       Balance: {global.balance} BNB
                     </Typography>
                   </div>
+
                   <div className="mb-2 flex items-center  gap-2">
                     <BriefcaseIcon className="-mt-px h-4 w-4 text-blue-gray-700" />
                     <Typography
                       variant="h4"
                       className="font-semibold text-blue-gray-700"
                     >
-                      NFT in Seazle
+                      NFT Created
                     </Typography>
                   </div>
-                  <div className="flex items-center">
+                  <div className="pl-20 pt-10 pb-10 flex items-center">
                     <ul id="all" className="grid gap-4 grid-cols-4 ">
-                      {items.map((item: any) => (
+                      {nftCreated.map((a: any) => (
+                        <li
+                          key={a._id}
+                          className="display:inline-block px-2"
+                        >
+                          <CardNFTCreated id={a._id} nft={a} />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mb-2 flex items-center  gap-2">
+                    <BriefcaseIcon className="-mt-px h-4 w-4 text-blue-gray-700" />
+                    <Typography
+                      variant="h4"
+                      className="font-semibold text-blue-gray-700"
+                    >
+                      NFT Selling
+                    </Typography>
+                  </div>
+                  <div className="pl-20 pt-10 pb-10 flex items-center">
+                    <ul id="all" className="grid gap-4 grid-cols-4 ">
+                      {nft.map((item: any) => (
                         <li
                           key={item._id}
                           className="display:inline-block px-2"
@@ -140,6 +177,7 @@ export default function NFTPage() {
                       ))}
                     </ul>
                   </div>
+
                   <div className="mb-2 flex items-center  gap-2">
                     <BriefcaseIcon className="-mt-px h-4 w-4 text-blue-gray-700" />
                     <Typography
@@ -153,7 +191,7 @@ export default function NFTPage() {
                       Get NFT in Metamask
                   </button>
                   
-                  <div className="flex items-center">
+                  <div className="pl-20 flex items-center">
                     <ul id="all" className="grid gap-4 grid-cols-4 ">
                       {arrayRender.map((item: any) => (
                         <li

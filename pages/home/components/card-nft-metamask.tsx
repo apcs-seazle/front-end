@@ -21,11 +21,11 @@ function randomIntFromInterval(min:any, max:any) {
 function CardNFTMetamask({ id, name }: { id: string; name: string }) {
   return (
     <Link href={{ pathname: "./nft", query: { id: id } }}>
-      <div className="relative flex-wrap w-72 h-72 inline-block">
+      <div className="relative flex-wrap w-60 h-60 inline-block">
         <img
           src= {ImageURL[randomIntFromInterval(0,ImageURL.length-1)]}
           alt=""
-          className=" w-72 h-72 object-cover rounded-3xl"
+          className=" w-60 h-60 object-cover rounded-3xl"
         />
         <div className="absolute right-0 bottom-0 left-0 w-full h-32 overflow-hidden bg-gradient-to-t from-black opacity-75 rounded-b-3xl"></div>
         {/* <div className="absolute right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-gradient-to-t from-black rounded-b-3xl"></div> */}

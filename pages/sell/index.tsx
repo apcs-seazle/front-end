@@ -6,72 +6,48 @@ import { HOST } from "../../utils/constant";
 import { storage } from "../../utils/firebase";
 import NavigationBar from "../../components/navigationbar";
 import lodash from "lodash";
+import router, { useRouter } from "next/router";
+import Loading from "../home/components/loading";
 
-export default function Sell({ id, nft }: { id: string; nft: any }) {
+export default function Sell() {
   const [price, setPrice] = useState<string>();
   const [success, setSuccess] = useState<boolean>(false);
+  const query = router.query;
+  const[item, setItem] = useState<any>();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (query.id == undefined) return;
+    fetch(`${HOST}/nftCreate/get/${query.id}`)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setItem(result);
+          console.log(result.contentUrl);
+        },
+        (error) => {
+          setIsLoaded(true);
+        }
+      );
+  }, [query.id]);
 
   const onSubmit = () => {
     return null;
-    //   if (file == null) {
-    //     return;
-    //   }
-
-    //   const fileRef = ref(storage, `files/${v4()}`);
-    //   axios
-    //     .get(`${HOST}/idMinted/get`)
-    //     .then((res) => {
-    //       const ids = res.data;
-    //       const idNFT = (parseInt(ids[0].idNFT.toString()) + 1).toString();
-
-    //       uploadBytes(fileRef, file)
-    //         .then((snapshot) => {
-    //           getDownloadURL(snapshot.ref)
-    //             .then((url) => {
-    //               const data = {
-    //                 name,
-    //                 description: desc,
-    //                 contentUrl: url,
-    //                 idNFT,
-    //                 ownerAddress: global.defaultAccount,
-    //               };
-    //               console.log("create nft data:", data);
-
-    //               axios
-    //                 .put(`${HOST}/nftCreate/create`, data)
-    //                 .then((resp) => {
-    //                   console.log("create nft successfully:", resp);
-    //                   axios
-    //                     .post(`${HOST}/idMinted/update`, { idNFT })
-    //                     .then((res) => {
-    //                       console.log(res);
-    //                       console.log(res.data);
-    //                       setSuccess(true);
-    //                     })
-    //                     .catch((error) => console.log(error));
-    //                 })
-    //                 .catch((err) => {
-    //                   console.log("create nft failed:", err);
-    //                 });
-    //             })
-    //             .catch((err) => {
-    //               console.log("get file url failed:", err);
-    //             });
-    //         })
-    //         .catch((err) => {
-    //           console.log("upload file failed:", err);
-    //         });
-    //     })
-    //     .catch((error) => console.log(error));
+    
   };
 
+  if (!isLoaded) {
+    return <Loading />;
+  }
+  else{
   return (
     <div className="h-screen bg-[#F0F9FF]">
       <NavigationBar />
       <div className="flex flex-col h-full w-full px-16 py-8 space-y-12 space-y-4 md:space-y-6">
         <div className="flex flex-row w-full items-center">
           <img
-            src={lodash.get(nft, "contentUrl")}
+            src= {item.contentUrl}
             alt="image"
             className="h-72 w-72 basis-1/2"
           />
@@ -93,7 +69,7 @@ export default function Sell({ id, nft }: { id: string; nft: any }) {
             </label>
 
             <p className="h-10 justify-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-2/5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              {lodash.get(nft, "name")}
+              {item.name}
             </p>
           </div>
 
@@ -103,7 +79,7 @@ export default function Sell({ id, nft }: { id: string; nft: any }) {
             </label>
 
             <p className="overflow-y-auto h-32 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              {lodash.get(nft, "description")}
+              {item.description}
             </p>
           </div>
         </div>
@@ -148,4 +124,4 @@ export default function Sell({ id, nft }: { id: string; nft: any }) {
       )}
     </div>
   );
-}
+                }}

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import lodash from "lodash";
 
-function CardNFT({ id, nft }: { id: string; nft: any }) {
+function CardNFTCreated({ id, nft }: { id: string; nft: any }) {
   return (
-    <Link href={{ pathname: "./nft", query: { id: id } }}>
+    <Link href={{ pathname: "./sell", query: { id:id } }}>
       <div className="relative flex-wrap w-60 h-60 inline-block">
         <img
           src={lodash.get(nft, "contentUrl")}
@@ -17,7 +17,7 @@ function CardNFT({ id, nft }: { id: string; nft: any }) {
             {lodash.get(nft, "name")}
           </div>
           <div className="text-sm  text-white">
-            Price: {lodash.get(nft, "price")} BNB
+            ID: {lodash.get(nft, "idNFT")}
           </div>
         </div>
       </div>
@@ -25,4 +25,4 @@ function CardNFT({ id, nft }: { id: string; nft: any }) {
   );
 }
 
-export default CardNFT;
+export default CardNFTCreated;
