@@ -24,6 +24,10 @@ export default function NFTPage() {
   const [modalSuccess, setModalSuccess] = useState(false);
   const [modalFail, setModalFail] = useState(false);
 
+  const [showModal_keep, setShowModal_keep] = useState(false);
+  const [modalSuccess_keep, setModalSuccess_keep] = useState(false);
+  const [modalFail_keep, setModalFail_keep] = useState(false);
+
   const [isEditting, setIsEditting] = useState(false);
 
   useEffect(() => {
@@ -60,15 +64,14 @@ export default function NFTPage() {
           setModalSuccess(true);
           setShowModal(false);
           setModalFail(false);
-         
+
           axios
-          .post(`${HOST}/money/update/${item.ownerAddress}`,{
-            ownerAddress: item.ownerAddress,
-            money: item.price
-          })
-          .then((res) => {
-          })
-          .catch((error) => console.log(error));
+            .post(`${HOST}/money/update/${item.ownerAddress}`, {
+              ownerAddress: item.ownerAddress,
+              money: item.price,
+            })
+            .then((res) => {})
+            .catch((error) => console.log(error));
 
           axios
             .delete(`${HOST}/nft/delete/${item.idNFT}`)
@@ -78,6 +81,30 @@ export default function NFTPage() {
           setModalSuccess(false);
           setModalFail(true);
           setShowModal(false);
+        }
+      }
+    }
+  };
+
+  const revertNFT = async () => {
+    if (typeof window.ethereum != "undefined") {
+      if (global.defaultAccount != "") {
+        try {
+          setModalSuccess_keep(true);
+          setShowModal_keep(false);
+          setModalFail_keep(false);
+
+          console.log("revert nft");
+
+          ///
+          ///
+          /// INSERT CODE REVERT HERE
+          ///
+          ///
+        } catch (err) {
+          setModalSuccess_keep(false);
+          setModalFail_keep(true);
+          setShowModal_keep(false);
         }
       }
     }
@@ -215,7 +242,7 @@ export default function NFTPage() {
                   </p>
                 </div>
                 {item.ownerAddress != global.defaultAccount ? (
-                  <div className="flex flex-row border-t-2 border-[#8A939B]">
+                  <div className="flex flex-row border-[#8A939B]">
                     <button
                       onClick={() => {
                         setShowModal(true);
@@ -227,19 +254,32 @@ export default function NFTPage() {
                     </button>
                   </div>
                 ) : (
-                  <div className="flex flex-row border-t-2 border-[#8A939B]">
-                    <button
-                      onClick={() => {
-                        if (isEditting == true) updateNFT();
-                        setIsEditting(!isEditting);
-                      }}
-                      type="button"
-                      className={`w-full m-3 text-white ${
-                        isEditting ? "bg-red-700" : "bg-blue-700"
-                      } focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xl px-5 py-2.5  focus:outline-none `}
-                    >
-                      {isEditting ? "Done" : "Edit"}
-                    </button>
+                  <div className=" border-t-2 border-[#8A939B]">
+                    <div className="flex flex-row">
+                      <button
+                        onClick={() => {
+                          if (isEditting == true) updateNFT();
+                          setIsEditting(!isEditting);
+                        }}
+                        type="button"
+                        className={`w-full mx-5 mt-3 mb-1 text-white ${
+                          isEditting ? "bg-red-700" : "bg-blue-700"
+                        } font-medium rounded-lg text-xl px-5 py-2.5 `}
+                      >
+                        {isEditting ? "Done" : "Edit"}
+                      </button>
+                    </div>
+                    <div className="flex flex-row">
+                      <button
+                        onClick={() => {
+                          setShowModal_keep(true);
+                        }}
+                        type="button"
+                        className={`w-full mx-5 mb-3 mt-1 text-white bg-emerald-700  font-medium rounded-lg text-xl px-5 py-2.5`}
+                      >
+                        Keep
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
@@ -277,7 +317,7 @@ export default function NFTPage() {
                   </p>
                   <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                     <p className="font-bold inline-block">Price:</p>
-                    {" " + item.price}
+                    {" " + item.price + " BNB"}
                   </p>
                 </div>
                 <div className="flex justify-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
@@ -292,6 +332,59 @@ export default function NFTPage() {
                   <button
                     onClick={() => {
                       setShowModal(false);
+                    }}
+                    data-modal-toggle="defaultModal"
+                    type="button"
+                    className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {showModal_keep == true && (
+          <div>
+            <div className="grid place-items-center bg-neutral-700 bg-opacity-40 fixed top-0 left-0 right-0 z-50 w-full p-4 overflw-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+              <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div className="flex items-center p-4 border-b rounded-t dark:border-gray-600">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z"
+                    />
+                  </svg>
+
+                  <h3 className="text-xl font-semibold pl-4 text-gray-900 dark:text-white">
+                    Revert
+                  </h3>
+                </div>
+                <div className="p-6 space-y-6">
+                  <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    Do you want to revert this item back to collection?
+                  </p>
+                </div>
+                <div className="flex justify-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                  <button
+                    onClick={revertNFT}
+                    data-modal-toggle="defaultModal"
+                    type="button"
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    Confirm
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowModal_keep(false);
                     }}
                     data-modal-toggle="defaultModal"
                     type="button"
@@ -368,6 +461,72 @@ export default function NFTPage() {
                     className="text-white bg-red-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
                     Let's go
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {modalSuccess_keep == true && (
+          <div>
+            <div className="grid place-items-center bg-neutral-700 bg-opacity-40 fixed top-0 left-0 right-0 z-50 w-full p-4 overflw-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+              <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 w-96 grid place-items-center">
+                <div className="flex items-start p-4 border-b rounded-t dark:border-gray-600">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/148/148767.png"
+                    className="p-1 rounded h-11 w-11"
+                    alt="..."
+                  />
+                  <h3 className="text-xl font-semibold pt-2 pl-4 text-gray-900 dark:text-white">
+                    Revert successful
+                  </h3>
+                </div>
+                <div className="flex items-center p-6 space-x-2  rounded-b dark:border-gray-600">
+                  <button
+                    onClick={() => {
+                      setModalSuccess_keep(false);
+                    }}
+                    data-modal-toggle="defaultModal"
+                    type="button"
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    Continue
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {modalFail_keep == true && (
+          <div>
+            <div className="grid place-items-center bg-neutral-700 bg-opacity-40 fixed top-0 left-0 right-0 z-50 w-full p-4 overflw-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+              <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 w-96 grid place-items-center">
+                <div className="flex items-start p-4 border-b rounded-t dark:border-gray-600">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/6659/6659895.png"
+                    className="p-1 rounded h-11 w-11"
+                    alt="..."
+                  />
+                  <h3 className="text-xl font-semibold pt-2 pl-4 text-gray-900 dark:text-white">
+                    Fail revert
+                  </h3>
+                </div>
+                <div className="p-6 space-y-6">
+                  <p className="font-semibold text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    Please try again!
+                  </p>
+                </div>
+                <div className="flex items-center p-6 space-x-2  rounded-b dark:border-gray-600">
+                  <button
+                    onClick={() => {
+                      setModalFail_keep(false);
+                    }}
+                    data-modal-toggle="defaultModal"
+                    type="button"
+                    className="text-white bg-red-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    Continue
                   </button>
                 </div>
               </div>
