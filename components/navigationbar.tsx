@@ -32,7 +32,7 @@ const NavigationBar = (searchQuery: any) => {
   const [modalMetamask, setModalMetamask] = useState(false);
 
   useEffect(() => {
-    if (global.defaultAccount != "") {
+    if (localStorage.getItem("account") != "") {
       ConnectToMetamask();
     }
   }, []);
@@ -42,6 +42,7 @@ const NavigationBar = (searchQuery: any) => {
       await window.ethereum
         .request({ method: "eth_requestAccounts" })
         .then((result: any[]) => {
+          localStorage.setItem("account", toChecksumAddress(result[0]));
           setDefaultAccount(toChecksumAddress(result[0]));
           accountChangeHandler(result);
         });
@@ -70,13 +71,13 @@ const NavigationBar = (searchQuery: any) => {
   const accountChangeHandler = async (newAccount: any) => {
     var tmp = toChecksumAddress(newAccount[0]);
     setDefaultAccount(tmp);
-    global.defaultAccount = tmp;
-    console.log(global.defaultAccount);
+    localStorage.setItem("account", tmp);
+    console.log(localStorage.getItem("account"));
 
     var balanceInWei = await web3.eth.getBalance(newAccount.toString());
     var balance = await web3.utils.fromWei(balanceInWei, "ether");
     setUserBalance(balance);
-    global.balance = balance;
+    localStorage.setItem("balance", balance);
     setConnectMessage("Connected Successful");
     
   };

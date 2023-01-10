@@ -13,7 +13,7 @@ const WalletConnect = () => {
   const [modalMetamask, setModalMetamask] = useState(false);
 
   useEffect(() => {
-    if (global.defaultAccount != "") {
+    if (localStorage.getItem("account") != "") {
       ConnectToMetamask();
     }
   }, []);
@@ -51,8 +51,8 @@ const WalletConnect = () => {
   const accountChangeHandler = async (newAccount: any) => {
     var tmp = toChecksumAddress(newAccount[0]);
     setDefaultAccount(tmp);
-    global.defaultAccount = tmp;
-    console.log(global.defaultAccount);
+    localStorage.setItem("account",tmp);
+    console.log(localStorage.getItem("account"));
 
     var balanceInWei = await web3.eth.getBalance(newAccount.toString());
     var balance = await web3.utils.fromWei(balanceInWei, "ether");

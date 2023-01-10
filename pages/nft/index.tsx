@@ -19,6 +19,7 @@ export default function NFTPage() {
   const [error, setError] = useState<any>();
   const [isLoaded, setIsLoaded] = useState(false);
   const [item, setItem] = useState<any>();
+  const[acc,setAcc] =useState("");
 
   const [showModal, setShowModal] = useState(false);
   const [modalSuccess, setModalSuccess] = useState(false);
@@ -31,6 +32,7 @@ export default function NFTPage() {
   const [isEditting, setIsEditting] = useState(false);
 
   useEffect(() => {
+    setAcc(localStorage.getItem("account")!);
     if (query.id == undefined) return;
     fetch(`${HOST}/nft/get/${query.id}`)
       .then((res) => res.json())
@@ -46,11 +48,9 @@ export default function NFTPage() {
       );
   }, [query.id]);
 
-  console.log("account", global.defaultAccount);
-
   const buyNFT = async () => {
     if (typeof window.ethereum != "undefined") {
-      if (global.defaultAccount != "") {
+      if (acc != "") {
         try {
           console.log("function called");
           var valueInWei = await web3.utils
@@ -59,7 +59,7 @@ export default function NFTPage() {
           await contract()
             .methods.buyNFT(item.idNFT.toString(), valueInWei)
             .send({
-              from: global.defaultAccount,
+              from: acc,
               value: valueInWei,
             });
           console.log("success");
@@ -92,7 +92,7 @@ export default function NFTPage() {
 
   const revertNFT = async () => {
     if (typeof window.ethereum != "undefined") {
-      if (global.defaultAccount != "") {
+      if (acc != "") {
         try {
           setModalSuccess_keep(true);
           setShowModal_keep(false);
@@ -263,7 +263,7 @@ export default function NFTPage() {
                     {item.description}
                   </p>
                 </div>
-                {item.ownerAddress != global.defaultAccount ? (
+                {item.ownerAddress != acc ? (
                   <div className="flex flex-row border-[#8A939B]">
                     <button
                       onClick={() => {

@@ -3,11 +3,12 @@ import HomePage from "./home";
 import contractAddress from "../helpers/connectMetamask/abicontract";
 import { useEffect } from "react";
 
+declare let window: any;
+
 declare global {
   var defaultAccount: string;
   var balance: string;
 }
-global.defaultAccount = "";
 global.balance = "";
 
 export default function Home() {
