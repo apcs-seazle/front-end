@@ -9,10 +9,6 @@ import Account from "../pages/home/components/account";
 import GetMoney from "../pages/home/components/getMoney";
 import Router, { useRouter } from "next/router";
 
-<<<<<<< HEAD
-const NavigationBar = () => {
-  const [searchValue, setSearchValue] = useState("");
-=======
 const NavigationBar = (searchQuery: any) => {
   const router = useRouter();
   // console.log("searching ", searchQuery["searchQuery"]);
@@ -22,7 +18,6 @@ const NavigationBar = (searchQuery: any) => {
       ? undefined
       : searchQuery["searchQuery"]
   );
->>>>>>> checkpoint
   const [isSearching, setIsSearching] = useState(false);
   const [isDropOpen, setDrop] = useState({
     explore: false,
@@ -86,11 +81,7 @@ const NavigationBar = (searchQuery: any) => {
               className="focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 ml-2 border-gray-200 bg-white h-10 px-5 rounded-2xl text-sm w-full"
               type="search"
               name="search"
-<<<<<<< HEAD
-              placeholder="Search items, collections, and accounts"
-=======
               placeholder="Search items"
->>>>>>> checkpoint
               onChange={(e) => setSearchValue(e.target.value)}
               onFocus={() => setIsSearching(true)}
               onBlur={() => setIsSearching(false)}
@@ -104,21 +95,12 @@ const NavigationBar = (searchQuery: any) => {
               onMouseEnter={handleClickDropdown.bind(null, "explore")}
               onMouseLeave={handleClickDropdown.bind(null, "explore")}
             >
-<<<<<<< HEAD
               <Link
                 href="/create"
                 className="block text-gray-700 rounded font-semibold hover:text-sky-600 hover:font-bold"
               >
                 Create
               </Link>
-=======
-              <a
-                href="#"
-                className="block text-gray-700 rounded font-semibold hover:text-sky-600 hover:font-bold"
-              >
-                Create
-              </a>
->>>>>>> checkpoint
             </div>
 
             <GetMoney address={"GetMoney"} />

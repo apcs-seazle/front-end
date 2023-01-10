@@ -5,6 +5,7 @@ import { v4 } from "uuid";
 import { HOST } from "../../utils/constant";
 import { storage } from "../../utils/firebase";
 import NavigationBar from "../../components/navigationbar";
+import lodash from "lodash";
 
 export default function Sell({ id, nft }: { id: string; nft: any }) {
   const [price, setPrice] = useState<string>();
@@ -70,7 +71,7 @@ export default function Sell({ id, nft }: { id: string; nft: any }) {
       <div className="flex flex-col h-full w-full px-16 py-8 space-y-12 space-y-4 md:space-y-6">
         <div className="flex flex-row w-full items-center">
           <img
-            src={nft.contentUrl}
+            src={lodash.get(nft, "contentUrl")}
             alt="image"
             className="h-72 w-72 basis-1/2"
           />
@@ -92,7 +93,7 @@ export default function Sell({ id, nft }: { id: string; nft: any }) {
             </label>
 
             <p className="h-10 justify-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-2/5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              {nft.name}
+              {lodash.get(nft, "name")}
             </p>
           </div>
 
@@ -102,7 +103,7 @@ export default function Sell({ id, nft }: { id: string; nft: any }) {
             </label>
 
             <p className="overflow-y-auto h-32 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              {nft.description}
+              {lodash.get(nft, "description")}
             </p>
           </div>
         </div>
