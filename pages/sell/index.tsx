@@ -1,18 +1,15 @@
-import axios from "axios";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useEffect, useState } from "react";
-import { v4 } from "uuid";
 import { HOST } from "../../utils/constant";
-import { storage } from "../../utils/firebase";
 import NavigationBar from "../../components/navigationbar";
-import lodash from "lodash";
 import router, { useRouter } from "next/router";
 import Loading from "../home/components/loading";
 
 export default function Sell() {
+  const router = useRouter();
+  const query = router.query;
+
   const [price, setPrice] = useState<string>();
   const [success, setSuccess] = useState<boolean>(false);
-  const query = router.query;
   const[item, setItem] = useState<any>();
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -88,7 +85,7 @@ export default function Sell() {
         className="bg-blue-700 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
         onClick={onSubmit}
       >
-        Create NFT
+        Sell NFT
       </button>
       {success && (
         <div>
