@@ -267,17 +267,6 @@ export default function NFTPage() {
                     {" " + item.name}
                   </p>
                   <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    <p className="font-bold inline-block">ID:</p>
-                    {" " + item.idNFT}
-                  </p>
-                  <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    Description: {item.description}
-                  </p>
-                  <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    <p className="font-bold inline-block">Owner Address:</p>
-                    {" " + item.ownerAddress}
-                  </p>
-                  <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                     <p className="font-bold inline-block">Price:</p>
                     {" " + item.price}
                   </p>
