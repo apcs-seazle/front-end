@@ -37,7 +37,7 @@ export default function NFTPage() {
         }
       );
 
-    fetch(`${HOST}/nftCreate/getNFT/${localStorage.getItem("tmp")}`)
+    fetch(`${HOST}/nftCreate/getNFT/${localStorage.getItem("account")}`)
     .then((res) => res.json())
     .then(
       (result) => {
