@@ -19,7 +19,7 @@ export default function NFTPage() {
   const [error, setError] = useState<any>();
   const [isLoaded, setIsLoaded] = useState(false);
   const [item, setItem] = useState<any>();
-  const[acc,setAcc] =useState("");
+  const [acc, setAcc] = useState("");
 
   const [showModal, setShowModal] = useState(false);
   const [modalSuccess, setModalSuccess] = useState(false);
@@ -276,28 +276,28 @@ export default function NFTPage() {
                     </button>
                   </div>
                 ) : (
-                  <div className=" border-t-2 border-[#8A939B]">
-                    <div className="flex flex-row">
+                  <div className="flex flex-row border-t-2 border-[#8A939B]">
+                    <div className="flex flex-1">
                       <button
                         onClick={() => {
                           if (isEditting == true) updateNFT();
                           setIsEditting(!isEditting);
                         }}
                         type="button"
-                        className={`w-full mx-5 mt-3 mb-1 text-white ${
+                        className={`w-full mx-5 my-2 text-white ${
                           isEditting ? "bg-red-700" : "bg-blue-700"
                         } font-medium rounded-lg text-xl px-5 py-2.5 `}
                       >
                         {isEditting ? "Done" : "Edit"}
                       </button>
                     </div>
-                    <div className="flex flex-row">
+                    <div className="flex flex-1">
                       <button
                         onClick={() => {
                           setShowModal_keep(true);
                         }}
                         type="button"
-                        className={`w-full mx-5 mb-3 mt-1 text-white bg-emerald-700  font-medium rounded-lg text-xl px-5 py-2.5`}
+                        className={`w-full mx-5 my-2 text-white bg-emerald-700  font-medium rounded-lg text-xl px-5 py-2.5`}
                       >
                         Keep
                       </button>
