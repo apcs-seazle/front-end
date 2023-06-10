@@ -138,7 +138,7 @@ const Connectmetamask = () => {
       if (defaultAccount != "") {
         try {
           var valueInWei = await web3.utils.toWei("0.01").toString();
-          await contract().methods.buyNFT("5", valueInWei).send({
+          await contract().methods.buyNFT(idMint[0].toString(), valueInWei).send({
             from: defaultAccount,
             value: valueInWei,
           });
